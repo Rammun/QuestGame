@@ -57,20 +57,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="DataManager.cs" />
     <Compile Include="DBInitializer.cs" />
     <Compile Include="DBInitializers\DBInitialization.cs" />
     <Compile Include="DBInitializers\IInitialization.cs" />
     <Compile Include="DBInitializers\InitUserAdmin.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
-    <Compile Include="Implementaions\EFFriendRepository.cs" />
+    <Compile Include="Entities\Quest.cs" />
+    <Compile Include="Implementaions\EFQuestRepository.cs" />
     <Compile Include="Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Interfaces\IDataManager.cs" />
-    <Compile Include="Interfaces\IFriendRepository.cs" />
+    <Compile Include="Interfaces\IQuestRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
-    <Compile Include="Interfaces\ISubscriberRepository.cs" />
-    <Compile Include="Interfaces\ITargetUserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestGame.Domain
+namespace QuestGame.Domain.Entities
 {
-    public class Class1
+    public class Quest
     {
+        public int Id { get; set; }
+        public string Body { get; set; }
     }
 }

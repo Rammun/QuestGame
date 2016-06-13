@@ -11,8 +11,7 @@ namespace QuestGame.Domain.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<TargetUser> TargetUsers { get; set; }
-        DbSet<Subscriber> Subscribers { get; set; }
+        DbSet<Quest> Quests { get; set; }
 
         IDbSet<ApplicationUser> GetUsers();
         IDbSet<IdentityRole> GetRoles();

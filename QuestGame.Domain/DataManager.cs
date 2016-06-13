@@ -14,29 +14,23 @@ namespace QuestGame.Domain
     public class DataManager : IDataManager
     {
         IApplicationDbContext dbContext;
-
-        //IFriendRepository friend;
+        IQuestRepository quest;
 
         public DataManager(IApplicationDbContext dbContext,
-                           ITargetUserRepository targetUser,
-                           ISubscriberRepository subscriber)
-        {            
-            this.targetUser = targetUser;
-            this.subscriber = subscriber;
-
-            if (dbContext == null)
-                throw new NullReferenceException("ApplicationDbContext равен NULL");
+                           IQuestRepository quest)
+        {
             this.dbContext = dbContext;
+            this.quest = quest;
         }
 
-        public IFriendRepository Friends
+        public IQuestRepository Quests
         {
             get
             {
-                if (friend == null)
-                    throw new NullReferenceException("Subscribers равен NULL");
+                if (quest == null)
+                    throw new NullReferenceException("Quests равен NULL");
 
-                return friend;
+                return quest;
             }
         }
 
