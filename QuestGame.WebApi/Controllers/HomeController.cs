@@ -21,5 +21,16 @@ namespace QuestGame.WebApi.Controllers
             var model = new RegistrationViewModel();
             return View(model);
         }
+
+        [HttpPost]
+        public ActionResult Registration(RegistrationViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                View(model);
+            }
+
+
+        }
     }
 }

@@ -10,12 +10,22 @@
 @using(Html.BeginForm())
 {
     <div>
-        <label>Введите Логин</label><br />
-        <input type="email" id="email" /> <br /><br />
-        <label>Введите пароль</label><br />
-        <input type="password" id="password" /><br /><br />
-        <label>Подтвердите пароль</label><br />
-        <input type="password" id="confirmpassword" /><br /><br />
+        <div>
+            @Html.LabelFor(m => m.Name)
+            @Html.EditorFor(m => m.Name)
+            @Html.ValidationMessageFor(m => m.Name)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.Password)
+            @Html.EditorFor(m => m.Password)
+            @Html.ValidationMessageFor(m => m.Password)
+        </div>
+        <div>
+            @Html.LabelFor(m => m.ConfirmationPassword)
+            @Html.EditorFor(m => m.ConfirmationPassword)
+            @Html.ValidationMessageFor(m => m.ConfirmationPassword)
+        </div>
+        
         <input type="submit" id="submit" value="Регистрация" />
     </div>
 }
