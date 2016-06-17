@@ -14,5 +14,7 @@ namespace QuestGame.WebApi.Controllers
 
             return View();
         }
+
+
     }
 }
