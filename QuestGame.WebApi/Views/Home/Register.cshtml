@@ -1,4 +1,4 @@
-﻿@model QuestGame.WebApi.Models.RegistrationViewModel
+﻿@model QuestGame.WebApi.Models.RegisterBindingModel
 
 @{
     ViewBag.Title = "Registration";
@@ -11,9 +11,9 @@
 {
     <div>
         <div>
-            @Html.LabelFor(m => m.Name)
-            @Html.EditorFor(m => m.Name)
-            @Html.ValidationMessageFor(m => m.Name)
+            @Html.LabelFor(m => m.Email)
+            @Html.EditorFor(m => m.Email)
+            @Html.ValidationMessageFor(m => m.Email)
         </div>
         <div>
             @Html.LabelFor(m => m.Password)
@@ -21,9 +21,9 @@
             @Html.ValidationMessageFor(m => m.Password)
         </div>
         <div>
-            @Html.LabelFor(m => m.ConfirmationPassword)
-            @Html.EditorFor(m => m.ConfirmationPassword)
-            @Html.ValidationMessageFor(m => m.ConfirmationPassword)
+            @Html.LabelFor(m => m.ConfirmPassword)
+            @Html.EditorFor(m => m.ConfirmPassword)
+            @Html.ValidationMessageFor(m => m.ConfirmPassword)
         </div>
         
         <input type="submit" id="submit" value="Регистрация" />
