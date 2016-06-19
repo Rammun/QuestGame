@@ -4,6 +4,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using QuestGame.WebApi.Models;
+using QuestGame.Domain.Entities;
+using QuestGame.Domain;
 
 namespace QuestGame.WebApi
 {

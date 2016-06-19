@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using QuestGame.WebApi.Providers;
 using QuestGame.WebApi.Models;
+using QuestGame.Domain;
 
 namespace QuestGame.WebApi
 {
