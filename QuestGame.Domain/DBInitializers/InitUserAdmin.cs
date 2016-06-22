@@ -25,9 +25,9 @@ namespace QuestGame.Domain.DBInitializers
                 EmailConfirmed = true
             };
             
-            IdentityRole role = new IdentityRole("Admin");
+            IdentityRole role = new IdentityRole("admin");
 
-            userManager.Create(user, "password");
+            userManager.Create(user, "qwerty");
             roleManager.Create(role);
             userManager.AddToRole(user.Id, role.Name);
         }

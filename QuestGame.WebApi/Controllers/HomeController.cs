@@ -4,6 +4,8 @@ using QuestGame.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -39,7 +41,7 @@ namespace QuestGame.WebApi.Controllers
             {
                 View(model);
             }
-            var respons = request.PostAsJsonAsync(@"api/Account/Register", model);
+            var respons = request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/Register", model);
 
             return RedirectToAction("Index");
         }
@@ -52,22 +54,21 @@ namespace QuestGame.WebApi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model)
+        public async Task<ActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 View(model);
             }
 
-            var tokenModel = new Dictionary<string, string>
-            {
-                {"grant_type", "password"},
-                {"username", model.Email},
-                {"password", model.Password},
-            };
+            var respons = (HttpResponseMessage) await request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/LoginUser", model);
+			if(!respons.IsSuccessStatusCode)
+			{
+				ViewBag.ErrorMessage = "Неудачаная попытка аутентификации";
+				return View();
+			}
 
-            var respons = request.PostAsync(@"Token", tokenModel);
-            return View();
+            return View("Index");
         }
     }
 }

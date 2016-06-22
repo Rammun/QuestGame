@@ -18,6 +18,10 @@ using QuestGame.WebApi.Providers;
 using QuestGame.WebApi.Results;
 using QuestGame.Domain.Entities;
 using System.Net;
+using Microsoft.Owin.Testing;
+using QuestGame.WebApi.Helpers;
+using System.Web.Configuration;
+using System.Net.Http.Headers;
 
 namespace QuestGame.WebApi.Controllers
 {
@@ -322,45 +326,37 @@ namespace QuestGame.WebApi.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [Route("Login")]
-        public async Task<IHttpActionResult> LoginUser(LoginViewModel model)
+		[Route("LoginUser")]
+		public async Task<IHttpActionResult> LoginUser(LoginBindingModel model)
         {
-            if (model == null)
-            {
-                return this.BadRequest("Invalid user data");
-            }
+			if (model == null)
+			{
+				return this.BadRequest("Invalid user data");
+			}		
 
-            // Invoke the "token" OWIN service to perform the login (POST /api/token)
-            // Use Microsoft.Owin.Testing.TestServer to perform in-memory HTTP POST request
-            var testServer = TestServer.Create<Startup>();
-            var requestParams = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("username", model.Email),
-                new KeyValuePair<string, string>("password", model.Password)
-            };
-            var requestParamsFormUrlEncoded = new FormUrlEncodedContent(requestParams);
-            var tokenServiceResponse = await testServer.HttpClient.PostAsync(
-                Startup.TokenEndpointPath, requestParamsFormUrlEncoded);
+			using (HttpClient client = new HttpClient())
+			{
+				client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
+				client.DefaultRequestHeaders.Accept.Clear();
 
-            if (tokenServiceResponse.StatusCode == HttpStatusCode.OK)
-            {
-                // Sucessful login --> create user session in the database
-                var responseString = await tokenServiceResponse.Content.ReadAsStringAsync();
-                var jsSerializer = new JavaScriptSerializer();
-                var responseData =
-                    jsSerializer.Deserialize<Dictionary<string, string>>(responseString);
-                var authToken = responseData["access_token"];
-                var username = responseData["username"];
-                var userSessionManager = new UserSessionManager();
-                userSessionManager.CreateUserSession(username, authToken);
+				var requestParams = new Dictionary<string, string>
+				{
+					{ "grant_type", "password" },
+					{ "username", model.Email },
+					{ "password", model.Password }
+				};
 
-                // Cleanup: delete expired sessions fromthe database
-                userSessionManager.DeleteExpiredSessions();
-            }
+				var content = new FormUrlEncodedContent(requestParams);
+				var response = await client.PostAsync("Token", content);
 
-            return this.ResponseMessage(tokenServiceResponse);
-        }
+				if(!response.IsSuccessStatusCode)
+				{
+					return BadRequest(response.StatusCode.ToString());
+				}
+
+				return Ok(response);
+			}			
+		}
 
         // POST api/Account/Register
         [AllowAnonymous]
