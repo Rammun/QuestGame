@@ -32,16 +32,42 @@ namespace QuestGame.WebApi.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterBindingModel model)
         {
             if(!ModelState.IsValid)
             {
                 View(model);
             }
-            //var param = JsonConvert.SerializeObject(model);
-            var respons = request.PostAsJson(@"api/Account/Register", model);
+            var respons = request.PostAsJsonAsync(@"api/Account/Register", model);
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Login(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                View(model);
+            }
+
+            var tokenModel = new Dictionary<string, string>
+            {
+                {"grant_type", "password"},
+                {"username", model.Email},
+                {"password", model.Password},
+            };
+
+            var respons = request.PostAsync(@"Token", tokenModel);
+            return View();
         }
     }
 }

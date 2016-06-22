@@ -8,7 +8,7 @@ namespace QuestGame.WebApi.Helpers
 {
     public interface IRequestHelper
     {
-        Task<string> PostAsJson(string method, object param);
-        Task<string> Post(string method, string param);
+        Task<string> PostAsJsonAsync(string method, object param);
+        Task<string> PostAsync(string method, Dictionary<string, string> param);
     }
 }
