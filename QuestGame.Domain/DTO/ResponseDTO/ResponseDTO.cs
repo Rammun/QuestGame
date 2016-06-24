@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestGame.Domain.DTO
+namespace QuestGame.Domain.DTO.ResponseDTO
 {
     public class ResponseDTO
     {

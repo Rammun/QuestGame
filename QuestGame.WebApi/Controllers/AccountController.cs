@@ -22,7 +22,7 @@ using Microsoft.Owin.Testing;
 using QuestGame.WebApi.Helpers;
 using System.Web.Configuration;
 using System.Net.Http.Headers;
-using QuestGame.Domain.DTO;
+using QuestGame.Domain.DTO.ResponseDTO;
 
 namespace QuestGame.WebApi.Controllers
 {

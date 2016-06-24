@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
-using QuestGame.Domain.DTO;
+using QuestGame.Domain.DTO.RequestDTO;
+using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Models;
 using System;
@@ -36,13 +37,21 @@ namespace QuestGame.WebApi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterBindingModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if(!ModelState.IsValid)
             {
                 View(model);
             }
-            var response = await requestHelper.PostAsJsonAsync(@"api/Account/Register", model);
+
+            var registerDTO = new RegisterRequestDTO
+            {
+                Login = model.Email,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword
+            };
+
+            var response = await requestHelper.PostAsJsonAsync(@"api/Account/Register", registerDTO);
             var answer = await response.Content.ReadAsAsync<ResponseDTO>();
 
             if(answer.Success)
@@ -75,7 +84,7 @@ namespace QuestGame.WebApi.Controllers
             var response = await requestHelper.PostAsJsonAsync(@"api/Account/LoginUser", model);
             var answer = await response.Content.ReadAsAsync<HttpResponseMessage>();
             
-            answer.
+            //answer.Content
 
             return View("Index");
         }
