@@ -32,12 +32,12 @@ namespace QuestGame.Domain
             return new ApplicationDbContext();
         }
 
-        public void SaveChanges()
+        public new void SaveChanges()
         {
             base.SaveChanges();
         }
 
-        public void Dispose()
+        public new void Dispose()
         {
             base.Dispose();
         }

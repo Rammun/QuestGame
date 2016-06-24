@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using QuestGame.Domain.DTO;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Models;
 using System;
@@ -13,11 +14,11 @@ namespace QuestGame.WebApi.Controllers
 {
     public class HomeController : Controller
     {
-        IRequestHelper request;
+        IRequestHelper requestHelper;
 
         public HomeController()
         {
-            request = new RequestHelper();
+            requestHelper = new RequestHelper();
         }
 
         public ActionResult Index()
@@ -35,13 +36,23 @@ namespace QuestGame.WebApi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterBindingModel model)
+        public async Task<ActionResult> Register(RegisterBindingModel model)
         {
             if(!ModelState.IsValid)
             {
                 View(model);
             }
-            var respons = request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/Register", model);
+            var response = await requestHelper.PostAsJsonAsync(@"api/Account/Register", model);
+            var answer = await response.Content.ReadAsAsync<ResponseDTO>();
+
+            if(answer.Success)
+            {
+                ViewBag.ErrorMessage = "Пользователь успешно зарегистрирован!";
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Ошибка регистрации!";
+            }
 
             return RedirectToAction("Index");
         }
@@ -61,12 +72,10 @@ namespace QuestGame.WebApi.Controllers
                 View(model);
             }
 
-            var respons = (HttpResponseMessage) await request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/LoginUser", model);
-			if(!respons.IsSuccessStatusCode)
-			{
-				ViewBag.ErrorMessage = "Неудачаная попытка аутентификации";
-				return View();
-			}
+            var response = await requestHelper.PostAsJsonAsync(@"api/Account/LoginUser", model);
+            var answer = await response.Content.ReadAsAsync<HttpResponseMessage>();
+            
+            answer.
 
             return View("Index");
         }
