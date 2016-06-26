@@ -22,6 +22,7 @@ using Microsoft.Owin.Testing;
 using QuestGame.WebApi.Helpers;
 using System.Web.Configuration;
 using System.Net.Http.Headers;
+using QuestGame.Domain.DTO.ResponseDTO;
 
 namespace QuestGame.WebApi.Controllers
 {
@@ -349,19 +350,14 @@ namespace QuestGame.WebApi.Controllers
 				var content = new FormUrlEncodedContent(requestParams);
 				var response = await client.PostAsync("Token", content);
 
-				if(!response.IsSuccessStatusCode)
-				{
-					return BadRequest(response.StatusCode.ToString());
-				}
-
-				return Ok(response);
-			}			
+                return ResponseMessage(response);
+            }			
 		}
 
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterBindingModel model)
+        public IHttpActionResult Register(RegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -370,14 +366,17 @@ namespace QuestGame.WebApi.Controllers
 
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = UserManager.CreateAsync(user, model.Password).Result;
 
-            if (!result.Succeeded)
+            var response = new ResponseDTO
             {
-                return GetErrorResult(result);
-            }
-
-            return Ok();
+                Success = result.Succeeded,
+                Status = result.Succeeded.ToString(),
+                Body = string.Empty,
+                ErrorMessage = result.Errors.ToString()
+            };
+            
+            return Ok(response);
         }
 
         // POST api/Account/RegisterExternal

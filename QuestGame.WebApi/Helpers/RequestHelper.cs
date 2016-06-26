@@ -23,7 +23,7 @@ namespace QuestGame.WebApi.Helpers
             baseUrl = WebConfigurationManager.AppSettings["BaseUrl"];
         }
 
-        public async Task<object> PostAsJsonAsync<T>(string method, object param)
+        public Task<HttpResponseMessage> PostAsJsonAsync(string method, object param)
         {
             using (var client = new HttpClient())
             {
@@ -32,14 +32,13 @@ namespace QuestGame.WebApi.Helpers
 
 				try
                 {
-                    var response = await client.PostAsJsonAsync(method, param);
-                    var answer = await response.Content.ReadAsAsync<T>();
-                    return answer;
+                    var response = client.PostAsJsonAsync(method, param);
+                    //var answer = await response.Content.ReadAsAsync<T>();
+                    return response;
                 }
                 catch(Exception ex)
                 {
-                    Debug.WriteLine("Ошибка запроса" + ex.Message);
-                    return new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.BadRequest };
+                    throw new Exception("Ошибка запроса: " + ex.Message);
                 }
             }
         }

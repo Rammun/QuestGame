@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using QuestGame.Domain.DTO.RequestDTO;
+using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Models;
 using System;
@@ -13,11 +15,11 @@ namespace QuestGame.WebApi.Controllers
 {
     public class HomeController : Controller
     {
-        IRequestHelper request;
+        IRequestHelper requestHelper;
 
         public HomeController()
         {
-            request = new RequestHelper();
+            requestHelper = new RequestHelper();
         }
 
         public ActionResult Index()
@@ -35,13 +37,31 @@ namespace QuestGame.WebApi.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterBindingModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if(!ModelState.IsValid)
             {
                 View(model);
             }
-            var respons = request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/Register", model);
+
+            var registerDTO = new RegisterRequestDTO
+            {
+                Login = model.Email,
+                Password = model.Password,
+                ConfirmPassword = model.ConfirmPassword
+            };
+
+            var response = await requestHelper.PostAsJsonAsync(@"api/Account/Register", registerDTO);
+            var answer = await response.Content.ReadAsAsync<ResponseDTO>();
+
+            if(answer.Success)
+            {
+                ViewBag.ErrorMessage = "Пользователь успешно зарегистрирован!";
+            }
+            else
+            {
+                ViewBag.ErrorMessage = "Ошибка регистрации!";
+            }
 
             return RedirectToAction("Index");
         }
@@ -61,12 +81,10 @@ namespace QuestGame.WebApi.Controllers
                 View(model);
             }
 
-            var respons = await request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/LoginUser", model);
-            //if(!respons.IsSuccessStatusCode)
-            //{
-            //    ViewBag.ErrorMessage = "Неудачаная попытка аутентификации";
-            //    return View();
-            //}
+            var response = await requestHelper.PostAsJsonAsync(@"api/Account/LoginUser", model);
+            var answer = await response.Content.ReadAsAsync<HttpResponseMessage>();
+            
+            //answer.Content
 
             return View("Index");
         }

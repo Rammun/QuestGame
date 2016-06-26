@@ -62,6 +62,8 @@
     <Compile Include="DBInitializers\DBInitialization.cs" />
     <Compile Include="DBInitializers\IInitialization.cs" />
     <Compile Include="DBInitializers\InitUserAdmin.cs" />
+    <Compile Include="DTO\RequestDTO\RegisterRequestDTO.cs" />
+    <Compile Include="DTO\ResponseDTO\ResponseDTO.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
     <Compile Include="Entities\Quest.cs" />
     <Compile Include="Implementaions\EFQuestRepository.cs" />
