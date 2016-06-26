@@ -39,7 +39,7 @@ namespace QuestGame.WebApi.Helpers
                 catch(Exception ex)
                 {
                     Debug.WriteLine("Ошибка запроса" + ex.Message);
-                    return ex.Message;
+                    return new HttpResponseMessage { StatusCode = System.Net.HttpStatusCode.BadRequest };
                 }
             }
         }

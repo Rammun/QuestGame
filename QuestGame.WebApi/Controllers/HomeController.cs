@@ -61,12 +61,12 @@ namespace QuestGame.WebApi.Controllers
                 View(model);
             }
 
-            var respons = (HttpResponseMessage) await request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/LoginUser", model);
-			if(!respons.IsSuccessStatusCode)
-			{
-				ViewBag.ErrorMessage = "Неудачаная попытка аутентификации";
-				return View();
-			}
+            var respons = await request.PostAsJsonAsync<HttpResponseMessage>(@"api/Account/LoginUser", model);
+            //if(!respons.IsSuccessStatusCode)
+            //{
+            //    ViewBag.ErrorMessage = "Неудачаная попытка аутентификации";
+            //    return View();
+            //}
 
             return View("Index");
         }
