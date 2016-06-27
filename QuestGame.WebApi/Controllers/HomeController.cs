@@ -7,8 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Configuration;
 using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Controllers
@@ -31,7 +33,7 @@ namespace QuestGame.WebApi.Controllers
 
         public ActionResult Register()
         {
-            var model = new RegisterBindingModel();
+            var model = new RegisterViewModel();
             return View(model);
         }
 
@@ -81,12 +83,19 @@ namespace QuestGame.WebApi.Controllers
                 View(model);
             }
 
-            var response = await requestHelper.PostAsJsonAsync(@"api/Account/LoginUser", model);
-            var answer = await response.Content.ReadAsAsync<HttpResponseMessage>();
-            
-            //answer.Content
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            return View("Index");
+                var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);
+                var answer = await response.Content.ReadAsAsync<Dictionary<string, string>>();
+
+                //answer.Content
+
+                return View("Index");
+            }
         }
     }
 }

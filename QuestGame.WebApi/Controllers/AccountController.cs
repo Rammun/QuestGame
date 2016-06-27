@@ -23,6 +23,7 @@ using QuestGame.WebApi.Helpers;
 using System.Web.Configuration;
 using System.Net.Http.Headers;
 using QuestGame.Domain.DTO.ResponseDTO;
+using QuestGame.Domain.DTO.RequestDTO;
 
 namespace QuestGame.WebApi.Controllers
 {
@@ -325,48 +326,57 @@ namespace QuestGame.WebApi.Controllers
             return logins;
         }
 
-        [HttpPost]
+        //[HttpPost]
         [AllowAnonymous]
 		[Route("LoginUser")]
 		public async Task<IHttpActionResult> LoginUser(LoginBindingModel model)
         {
-			if (model == null)
-			{
-				return this.BadRequest("Invalid user data");
-			}		
+            if (model == null)
+            {
+                return this.BadRequest("Invalid user data");
+            }
 
-			using (HttpClient client = new HttpClient())
-			{
-				client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
-				client.DefaultRequestHeaders.Accept.Clear();
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
+                client.DefaultRequestHeaders.Accept.Clear();
 
-				var requestParams = new Dictionary<string, string>
-				{
-					{ "grant_type", "password" },
-					{ "username", model.Email },
-					{ "password", model.Password }
-				};
+                var requestParams = new Dictionary<string, string>
+                {
+                    { "grant_type", "password" },
+                    { "username", model.Email },
+                    { "password", model.Password }
+                };
 
-				var content = new FormUrlEncodedContent(requestParams);
-				var response = await client.PostAsync("Token", content);
+                var content = new FormUrlEncodedContent(requestParams);
+                var response = await client.PostAsync("Token", content);
 
-                return ResponseMessage(response);
-            }			
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
+
+                    var authToken = responseData["access_token"];
+                    var username = responseData["username"];
+
+                    return Ok(authToken);
+                }
+                return BadRequest(response.StatusCode.ToString());                
+            }		
 		}
 
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public IHttpActionResult Register(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Register(RegisterRequestDTO model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Login, Email = model.Login };
 
-            IdentityResult result = UserManager.CreateAsync(user, model.Password).Result;
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             var response = new ResponseDTO
             {
