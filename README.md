@@ -8,3 +8,6 @@
 
 - Bird
 - Magic
+
+* Bird
+* Magic
