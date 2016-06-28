@@ -354,9 +354,7 @@ namespace QuestGame.WebApi.Controllers
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
-
                     var authToken = responseData["access_token"];
-                    var username = responseData["username"];
 
                     return Ok(authToken);
                 }

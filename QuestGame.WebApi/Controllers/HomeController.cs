@@ -53,7 +53,7 @@ namespace QuestGame.WebApi.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            var response = await requestHelper.PostAsJsonAsync(@"api/Account/Register", registerDTO);
+            var response = requestHelper.PostAsJson(@"api/Account/Register", registerDTO);
             var answer = await response.Content.ReadAsAsync<ResponseDTO>();
 
             if(answer.Success)
@@ -90,7 +90,7 @@ namespace QuestGame.WebApi.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);
-                var answer = await response.Content.ReadAsAsync<Dictionary<string, string>>();
+                var answer = await response.Content.ReadAsStringAsync();
 
                 //answer.Content
 

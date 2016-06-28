@@ -23,7 +23,7 @@ namespace QuestGame.WebApi.Helpers
             baseUrl = WebConfigurationManager.AppSettings["BaseUrl"];
         }
 
-        public Task<HttpResponseMessage> PostAsJsonAsync(string method, object param)
+        public HttpResponseMessage PostAsJson(string method, object param)
         {
             using (var client = new HttpClient())
             {
@@ -32,7 +32,7 @@ namespace QuestGame.WebApi.Helpers
 
 				try
                 {
-                    var response = client.PostAsJsonAsync(method, param);
+                    var response = client.PostAsJsonAsync(method, param).Result;
                     //var answer = await response.Content.ReadAsAsync<T>();
                     return response;
                 }
@@ -90,5 +90,6 @@ namespace QuestGame.WebApi.Helpers
             httpClient.BaseAddress = new Uri(baseUrl);
             httpClient.DefaultRequestHeaders.Accept.Clear();            
         }
+        
     }	
 }
