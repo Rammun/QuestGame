@@ -53,19 +53,26 @@ namespace QuestGame.WebApi.Controllers
                 ConfirmPassword = model.ConfirmPassword
             };
 
-            var response = requestHelper.PostAsJson(@"api/Account/Register", registerDTO);
-            var answer = await response.Content.ReadAsAsync<ResponseDTO>();
-
-            if(answer.Success)
+            using(HttpClient client = new HttpClient())
             {
-                ViewBag.ErrorMessage = "Пользователь успешно зарегистрирован!";
-            }
-            else
-            {
-                ViewBag.ErrorMessage = "Ошибка регистрации!";
-            }
+                client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            return RedirectToAction("Index");
+                var response = await client.PostAsJsonAsync(@"api/Account/Register", registerDTO);
+                var answer = await response.Content.ReadAsAsync<ResponseDTO>();
+
+                if (answer.Success)
+                {
+                    ViewBag.ErrorMessage = "Пользователь успешно зарегистрирован!";
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Ошибка регистрации!";
+                }
+
+                return RedirectToAction("Index");
+            }            
         }
 
         public ActionResult Login(string returnUrl)
@@ -92,7 +99,8 @@ namespace QuestGame.WebApi.Controllers
                 var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);
                 var answer = await response.Content.ReadAsStringAsync();
 
-                //answer.Content
+                //Записать токен в сесию
+                Session[answer] = new { UserName = model.Email };
 
                 return View("Index");
             }

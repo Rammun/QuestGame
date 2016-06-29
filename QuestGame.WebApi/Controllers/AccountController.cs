@@ -340,6 +340,7 @@ namespace QuestGame.WebApi.Controllers
             {
                 client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
                 client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var requestParams = new Dictionary<string, string>
                 {

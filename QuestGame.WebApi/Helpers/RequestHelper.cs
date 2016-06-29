@@ -16,18 +16,20 @@ namespace QuestGame.WebApi.Helpers
 {
     public class RequestHelper : IRequestHelper
     {
-        private string baseUrl;
+        public static string BaseUrl = WebConfigurationManager.AppSettings["BaseUrl"];
 
-        public RequestHelper()
+        public static void Setting(HttpClient client)
         {
-            baseUrl = WebConfigurationManager.AppSettings["BaseUrl"];
+            client.BaseAddress = new Uri(BaseUrl);
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public HttpResponseMessage PostAsJson(string method, object param)
         {
             using (var client = new HttpClient())
             {
-                SettingHttpClient(baseUrl, client);
+                RequestHelper.Setting(client);
 				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
 				try
@@ -47,7 +49,7 @@ namespace QuestGame.WebApi.Helpers
 		{
 			using (var client = new HttpClient())
 			{
-				SettingHttpClient(baseUrl, client);
+				RequestHelper.Setting(client);
 
 				try
 				{
@@ -68,7 +70,7 @@ namespace QuestGame.WebApi.Helpers
         {
             using (var client = new HttpClient())
             {
-				SettingHttpClient(baseUrl, client);
+                RequestHelper.Setting(client);
 
 				try
 				{
@@ -84,12 +86,5 @@ namespace QuestGame.WebApi.Helpers
 				}
 			}
         }
-
-		private void SettingHttpClient(string baseUrl, HttpClient httpClient)
-        {
-            httpClient.BaseAddress = new Uri(baseUrl);
-            httpClient.DefaultRequestHeaders.Accept.Clear();            
-        }
-        
     }	
 }
