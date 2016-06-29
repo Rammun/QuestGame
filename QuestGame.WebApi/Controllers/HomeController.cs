@@ -6,6 +6,7 @@ using QuestGame.WebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -99,8 +100,16 @@ namespace QuestGame.WebApi.Controllers
                 var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);
                 var answer = await response.Content.ReadAsStringAsync();
 
+                response.StatusCode == HttpStatusCode.BadRequest
+
+                if(string.IsNullOrEmpty(answer))
+                {
+                    ViewBag.ErrorMessage = "Неудачная попытка аутентификации!";
+                    return View();
+                }
+
                 //Записать токен в сесию
-                Session[answer] = new { UserName = model.Email };
+                Session["User"] = new { UserName = model.Email, Token = answer };
 
                 return View("Index");
             }

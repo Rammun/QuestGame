@@ -356,10 +356,9 @@ namespace QuestGame.WebApi.Controllers
                 {
                     var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
                     var authToken = responseData["access_token"];
-
                     return Ok(authToken);
                 }
-                return BadRequest(response.StatusCode.ToString());                
+                return BadRequest(string.Empty);                
             }		
 		}
 
