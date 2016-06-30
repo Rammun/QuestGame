@@ -29,13 +29,6 @@ namespace QuestGame.WebApi.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-
-            if(Session["Token"] == null)
-            {
-
-            }
-
-
             return View();
         }
 
@@ -114,7 +107,7 @@ namespace QuestGame.WebApi.Controllers
 
                 var answer = await response.Content.ReadAsStringAsync();
 
-                //Записать токен в сесию
+                //Записать токена в сесию
                 Session["User"] = new UserModel { UserName = model.Email, Token = answer };
 
                 return RedirectToAction("Index");
@@ -145,7 +138,7 @@ namespace QuestGame.WebApi.Controllers
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", user.Token);                    
 
                     var response1 = await client.GetAsync(@"api/Values/Authorize");
-                    if (response1.StatusCode == HttpStatusCode.BadRequest)
+                    if (response1.StatusCode != HttpStatusCode.OK)
                     {
                         message.Append(" -> Неудачный запрос 1");
                     }
@@ -156,7 +149,7 @@ namespace QuestGame.WebApi.Controllers
                     }
 
                     var response2 = await client.GetAsync(@"api/Values/Admin");
-                    if (response2.StatusCode == HttpStatusCode.BadRequest)
+                    if (response2.StatusCode != HttpStatusCode.OK)
                     {
                         message.Append(" -> Неудачный запрос 2");
                     }
