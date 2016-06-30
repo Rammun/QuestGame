@@ -29,6 +29,12 @@ namespace QuestGame.WebApi.Controllers
         {
             ViewBag.Title = "Home Page";
 
+            if(Session["Token"] == null)
+            {
+
+            }
+
+
             return View();
         }
 
@@ -97,22 +103,27 @@ namespace QuestGame.WebApi.Controllers
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);
-                var answer = await response.Content.ReadAsStringAsync();
+                var response = await client.PostAsJsonAsync(@"api/Account/LoginUser", model);              
 
-                response.StatusCode == HttpStatusCode.BadRequest
-
-                if(string.IsNullOrEmpty(answer))
+                if(response.StatusCode == HttpStatusCode.BadRequest)
                 {
                     ViewBag.ErrorMessage = "Неудачная попытка аутентификации!";
                     return View();
                 }
 
-                //Записать токен в сесию
-                Session["User"] = new { UserName = model.Email, Token = answer };
+                var answer = await response.Content.ReadAsStringAsync();
 
-                return View("Index");
+                //Записать токен в сесию
+                Session["User"] = new UserModel { UserName = model.Email, Token = answer };
+
+                return RedirectToAction("Index");
             }
+        }
+
+        public ActionResult LogOff()
+        {
+            Session["User"] = null;
+            return View("Index");
         }
     }
 }
