@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
@@ -124,6 +125,51 @@ namespace QuestGame.WebApi.Controllers
         {
             Session["User"] = null;
             return View("Index");
+        }
+
+        public async Task<ActionResult> TestMethod()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var user = Session["User"] as UserModel;
+                var message = new StringBuilder("Начало");
+                if (user == null)
+                {
+                    ViewBag.Message = "Пользователь не аутентифицирован!";
+                }
+                else
+                {
+                    client.BaseAddress = new Uri(WebConfigurationManager.AppSettings["BaseUrl"]);
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", user.Token);                    
+
+                    var response1 = await client.GetAsync(@"api/Values/Authorize");
+                    if (response1.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        message.Append(" -> Неудачный запрос 1");
+                    }
+                    else
+                    {
+                        var answer1 = await response1.Content.ReadAsStringAsync();
+                        message.Append(answer1);
+                    }
+
+                    var response2 = await client.GetAsync(@"api/Values/Admin");
+                    if (response2.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        message.Append(" -> Неудачный запрос 2");
+                    }
+                    else
+                    {
+                        var answer2 = await response2.Content.ReadAsStringAsync();
+                        message.Append(answer2);
+                    }
+
+                    ViewBag.Message = message.ToString();
+                }
+                return View();
+            }
         }
     }
 }

@@ -7,19 +7,25 @@ using System.Web.Http;
 
 namespace QuestGame.WebApi.Controllers
 {
-    [Authorize]
+    [RoutePrefix("api/Values")]
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        [Authorize]
+        [HttpGet]
+        [Route("Authorize")]
+        public string Get()
         {
-            return new string[] { "value1", "value2" };
+            return "Authorize";
         }
 
         // GET api/values/5
-        public string Get(int id)
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        [Route("Admin")]
+        public string Admin()
         {
-            return "value";
+            return "Admin";
         }
 
         // POST api/values
