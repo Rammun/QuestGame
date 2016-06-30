@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.ModelBinding;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using QuestGame.Domain.DTO.RequestDTO;
+using QuestGame.Domain.DTO.ResponseDTO;
+using QuestGame.Domain.Entities;
 using QuestGame.WebApi.Models;
 using QuestGame.WebApi.Providers;
 using QuestGame.WebApi.Results;
-using QuestGame.Domain.Entities;
+using System;
+using System.Collections.Generic;
 using System.Net;
-using Microsoft.Owin.Testing;
-using QuestGame.WebApi.Helpers;
-using System.Web.Configuration;
+using System.Net.Http;
 using System.Net.Http.Headers;
-using QuestGame.Domain.DTO.ResponseDTO;
-using QuestGame.Domain.DTO.RequestDTO;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.Http;
 
 namespace QuestGame.WebApi.Controllers
 {
@@ -133,7 +130,7 @@ namespace QuestGame.WebApi.Controllers
 
             IdentityResult result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword,
                 model.NewPassword);
-            
+
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
@@ -266,9 +263,9 @@ namespace QuestGame.WebApi.Controllers
             if (hasRegistered)
             {
                 Authentication.SignOut(DefaultAuthenticationTypes.ExternalCookie);
-                
-                 ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
-                    OAuthDefaults.AuthenticationType);
+
+                ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(UserManager,
+                   OAuthDefaults.AuthenticationType);
                 ClaimsIdentity cookieIdentity = await user.GenerateUserIdentityAsync(UserManager,
                     CookieAuthenticationDefaults.AuthenticationType);
 
@@ -328,12 +325,16 @@ namespace QuestGame.WebApi.Controllers
 
         //[HttpPost]
         [AllowAnonymous]
-		[Route("LoginUser")]
-		public async Task<IHttpActionResult> LoginUser(LoginBindingModel model)
+        [Route("LoginUser")]
+        public async Task<HttpResponseMessage> LoginUser(LoginBindingModel model)
         {
             if (model == null)
             {
-                return this.BadRequest("Invalid user data");
+                return new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Content = new StringContent("Invalid user data")
+                };
             }
 
             using (HttpClient client = new HttpClient())
@@ -356,11 +357,19 @@ namespace QuestGame.WebApi.Controllers
                 {
                     var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
                     var authToken = responseData["access_token"];
-                    return Ok(authToken);
+                    return new HttpResponseMessage()
+                    {
+                        Content = new StringContent(authToken),
+                        StatusCode = HttpStatusCode.OK
+                    };
                 }
-                return BadRequest(string.Empty);                
-            }		
-		}
+
+                return new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+            }
+        }
 
         // POST api/Account/Register
         [AllowAnonymous]
@@ -383,7 +392,7 @@ namespace QuestGame.WebApi.Controllers
                 Body = string.Empty,
                 ErrorMessage = result.Errors.ToString()
             };
-            
+
             return Ok(response);
         }
 
@@ -415,7 +424,7 @@ namespace QuestGame.WebApi.Controllers
             result = await UserManager.AddLoginAsync(user.Id, info.Login);
             if (!result.Succeeded)
             {
-                return GetErrorResult(result); 
+                return GetErrorResult(result);
             }
             return Ok();
         }
@@ -536,6 +545,6 @@ namespace QuestGame.WebApi.Controllers
             }
         }
 
-        #endregion
+        #endregion Вспомогательные приложения
     }
 }
