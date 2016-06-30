@@ -8,6 +8,6 @@ namespace QuestGame.Models.BusinessLogic
     public class Transition
     {
         public string Description { get; set; }
-        public Frame Frame { get; set; }
+        public int FrameNumber { get; set; }
     }
 }
