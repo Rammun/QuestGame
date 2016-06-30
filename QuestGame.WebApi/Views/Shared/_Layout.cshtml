@@ -24,9 +24,9 @@
                         <li>@Html.ActionLink("Домашняя страница", "Index", "Home", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
                         @{
-                            if(Session["User"] != null)
+                            if (Session["User"] != null)
                             {
-                                <li>@Html.ActionLink("Игра", "Index", "Game")</li>
+                                <li>@Html.ActionLink("Игра", "Index", "MainPage", new { area = "Game" }, null)</li>
                             }
                         }
                         <li>@Html.ActionLink("Test", "TestMethod", "Home", new { area = "" }, null)</li>                 
