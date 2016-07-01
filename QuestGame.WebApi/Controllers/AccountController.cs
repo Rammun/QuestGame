@@ -385,7 +385,7 @@ namespace QuestGame.WebApi.Controllers
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
-            var response = new ResponseDTO
+            var response = new RegisterResponseDTO
             {
                 Success = result.Succeeded,
                 Status = result.Succeeded.ToString(),

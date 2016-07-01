@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuestGame.Models.BusinessLogic
+namespace QuestGame.BusinessLogic.Models
 {
     public class Transition
     {

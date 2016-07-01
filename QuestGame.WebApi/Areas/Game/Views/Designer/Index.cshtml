@@ -1,8 +1,19 @@
-﻿
+﻿@model IEnumerable<QuestGame.BusinessLogic.Models.Quest>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Редактор квестов</h2>
 
+<div>
+    @{
+        <ul>
+            @foreach(var quest in Model)
+            {
+                <li>@quest.Name</li>
+            }
+        </ul>
+    }
+</div>

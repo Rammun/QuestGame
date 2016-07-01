@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.DTO.ResponseDTO
 {
-    public class ResponseDTO
+    public class RegisterResponseDTO
     {
         public bool Success { get; set; }
         public string Status { get; set; }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestGame.Models.BusinessLogic
+namespace QuestGame.BusinessLogic.Models
 {
     public class Quest
     {

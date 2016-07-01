@@ -61,7 +61,7 @@ namespace QuestGame.WebApi.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var response = await client.PostAsJsonAsync(@"api/Account/Register", registerDTO);
-                var answer = await response.Content.ReadAsAsync<ResponseDTO>();
+                var answer = await response.Content.ReadAsAsync<RegisterResponseDTO>();
 
                 if (answer.Success)
                 {

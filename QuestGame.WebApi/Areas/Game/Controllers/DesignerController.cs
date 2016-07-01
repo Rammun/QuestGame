@@ -1,6 +1,7 @@
-﻿using QuestGame.Domain;
-using QuestGame.Domain.Entities;
-using QuestGame.Domain.Implementaions;
+﻿using Newtonsoft.Json;
+using QuestGame.BusinessLogic.Models;
+using QuestGame.Domain.DTO.RequestDTO;
+using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Models;
 using System;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -18,21 +20,38 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
     {
         // GET: Game/Designer
         public async Task<ActionResult> Index()
-        {
+        {           
             using (HttpClient client = new HttpClient())
             {
-                RequestHelper.Setting(client);
-                var response = await client.PostAsJsonAsync(@"api/Quest", (Session["User"] as UserModel).UserName);
+                var quests = new List<Quest>();
 
-                if (response.StatusCode == HttpStatusCode.BadRequest)
+                var user = Session["User"] as UserModel;
+                if (user == null)
                 {
-                    ViewBag.ErrorMessage = "Неудачная запрос!";
-                    return View();
+                    ViewBag.Message = "Пользователь не аутентифицирован!";
                 }
+                else
+                {
+                    RequestHelper.Setting(client);
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", user.Token);
 
-                var answer = await response.Content.ReadAsAsync<IEnumerable<Quest>>();
+                    var request = new QuestRequestDTO { UserName = user.UserName };
+                    var response = await client.GetAsync(@"api/Quest");
 
-                return View(answer);
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        ViewBag.Message = "Неудачный запрос!";
+                        return View();
+                    }
+
+                    var answer = await response.Content.ReadAsAsync<QuestResponseDTO>();
+                    
+                    foreach (var quest in answer.Quests)
+                    {
+                        quests.Add(JsonConvert.DeserializeObject<Quest>(quest.Body));
+                    }                    
+                }
+                return View(quests);
             }
         }
     }
