@@ -186,6 +186,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Game\Controllers\DesignerController.cs" />
     <Compile Include="Areas\Game\Controllers\MainPageController.cs" />
     <Compile Include="Areas\Game\GameAreaRegistration.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
@@ -271,6 +272,7 @@
     <Content Include="Areas\Game\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Game\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Game\Views\MainPage\Index.cshtml" />
+    <Content Include="Areas\Game\Views\Designer\Index.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
