@@ -353,20 +353,20 @@ namespace QuestGame.WebApi.Controllers
                 var content = new FormUrlEncodedContent(requestParams);
                 var response = await client.PostAsync("Token", content);
 
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
-                    var authToken = responseData["access_token"];
-                    return new HttpResponseMessage()
+                    return new HttpResponseMessage
                     {
-                        Content = new StringContent(authToken),
-                        StatusCode = HttpStatusCode.OK
+                        StatusCode = HttpStatusCode.BadRequest
                     };
                 }
 
-                return new HttpResponseMessage
+                var responseData = await response.Content.ReadAsAsync<Dictionary<string, string>>();
+                var authToken = responseData["access_token"];
+                return new HttpResponseMessage()
                 {
-                    StatusCode = HttpStatusCode.BadRequest
+                    Content = new StringContent(authToken),
+                    StatusCode = HttpStatusCode.OK
                 };
             }
         }

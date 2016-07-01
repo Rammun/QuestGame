@@ -43,9 +43,9 @@ namespace QuestGame.Domain.Implementaions
             Delete(quest.Id);
         }
 
-        public void Delete(int id)
+        public void Delete(object id)
         {
-            Quest quest = GetById(id);
+            Quest quest = GetById((int)id);
             if (quest != null)
                 dbContext.Quests.Remove(quest);
         }
