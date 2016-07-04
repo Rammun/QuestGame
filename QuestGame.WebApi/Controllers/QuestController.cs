@@ -1,7 +1,9 @@
-﻿using QuestGame.Domain;
+﻿using AutoMapper;
+using QuestGame.Domain;
 using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
 using QuestGame.Domain.Implementaions;
+using QuestGame.WebApi.Mapping;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +18,14 @@ namespace QuestGame.WebApi.Controllers
     public class QuestController : ApiController
     {
         DataManager dataManager;
+        IMapper mapper;
 
         public QuestController()
         {
             var dbContext = new ApplicationDbContext();
             this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
+
+            mapper = AutoMapperConfiguration.GetMappings();
         }
 
         // GET api/values
@@ -28,15 +33,7 @@ namespace QuestGame.WebApi.Controllers
         {
             var quests = dataManager.Quests.GetAll();
 
-            var response = new List<QuestResponseDTO>();
-            foreach (var quest in quests)
-            {
-                response.Add(new QuestResponseDTO
-                    {
-                        OwnerName = quest.Owner.UserName,
-                        Body = quest.Body
-                    });
-            }
+            var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestResponseDTO>>(quests);
             return response;
         }
 
@@ -46,7 +43,7 @@ namespace QuestGame.WebApi.Controllers
             var quest = dataManager.Quests.GetById(id);
             var response = new QuestResponseDTO
             {
-                OwnerName = quest.Owner.UserName,
+                Owner = quest.Owner.UserName,
                 Body = quest.Body
             };
             return response;

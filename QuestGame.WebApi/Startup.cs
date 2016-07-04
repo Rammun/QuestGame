@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Owin;
 using Owin;
+using QuestGame.WebApi.Mapping;
 
 [assembly: OwinStartup(typeof(QuestGame.WebApi.Startup))]
 

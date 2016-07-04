@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using QuestGame.Domain.Entities;
+using QuestGame.Domain.DTO.ResponseDTO;
 
 namespace QuestGame.WebApi.Mapping
 {
     public class AutoMapperConfiguration
     {
-
-        public static void Configure()
+        public static IMapper GetMappings()
         {
-            Mapper.Initialize(x =>
+            return new MapperConfiguration(cfg =>
             {
-                //x.AddProfile<DtoToModelNSMappingProfile>();
-                //x.AddProfile<ModelToDtoNSMappingProfile>();
-            });
+                cfg.CreateMap<Quest, QuestResponseDTO>().ForMember("Owner", x => x.MapFrom(pr => pr.Owner.UserName));
+                                                        //.ForMember("Id", x => x.Ignore())
+                                                        //.ForMember("OwnerId", x => x.Ignore());
+                
+            }).CreateMapper();
         } 
     }
 }
