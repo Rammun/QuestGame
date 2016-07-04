@@ -9,6 +9,7 @@ namespace QuestGame.Domain.DTO.ResponseDTO
 {
     public class QuestResponseDTO
     {
-        public IEnumerable<Quest> Quests { get; set; }
+        public string OwnerName { get; set; }
+        public string Body { get; set; }
     }
 }

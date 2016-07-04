@@ -10,6 +10,7 @@ namespace QuestGame.Domain.Entities
     {
         public int Id { get; set; }
         public string Body { get; set; }
-        public virtual ApplicationUser OwnerId { get; set; }
+        public string OwnerId { get; set; }
+        public virtual ApplicationUser Owner { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using QuestGame.Domain;
+using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
 using QuestGame.Domain.Implementaions;
 using System;
@@ -23,15 +24,32 @@ namespace QuestGame.WebApi.Controllers
         }
 
         // GET api/values
-        public IEnumerable<Quest> Get()
+        public IEnumerable<QuestResponseDTO> Get()
         {
-            return dataManager.Quests.GetAll();
+            var quests = dataManager.Quests.GetAll();
+
+            var response = new List<QuestResponseDTO>();
+            foreach (var quest in quests)
+            {
+                response.Add(new QuestResponseDTO
+                    {
+                        OwnerName = quest.Owner.UserName,
+                        Body = quest.Body
+                    });
+            }
+            return response;
         }
 
         // GET api/values/5
-        public Quest Get(int id)
+        public QuestResponseDTO Get(int id)
         {
-            return dataManager.Quests.GetById(id);
+            var quest = dataManager.Quests.GetById(id);
+            var response = new QuestResponseDTO
+            {
+                OwnerName = quest.Owner.UserName,
+                Body = quest.Body
+            };
+            return response;
         }
 
         // POST api/values

@@ -44,12 +44,12 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                         return View();
                     }
 
-                    var answer = await response.Content.ReadAsAsync<QuestResponseDTO>();
+                    var answer = await response.Content.ReadAsAsync<IEnumerable<Quest>>();
                     
-                    foreach (var quest in answer.Quests)
-                    {
-                        quests.Add(JsonConvert.DeserializeObject<Quest>(quest.Body));
-                    }                    
+                    //foreach (var quest in answer.Quests)
+                    //{
+                    //    quests.Add(JsonConvert.DeserializeObject<Quest>(quest.Body));
+                    //}                    
                 }
                 return View(quests);
             }
