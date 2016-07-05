@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using AutoMapper;
-using QuestGame.Domain.Entities;
-using QuestGame.Domain.DTO.ResponseDTO;
+﻿using AutoMapper;
+using QuestGame.WebApi.Mapping.Profiles;
 
 namespace QuestGame.WebApi.Mapping
 {
     public class AutoMapperConfiguration
     {
-        public static IMapper GetMappings()
+        public static IMapper CreatetMappings()
         {
             return new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Quest, QuestResponseDTO>().ForMember("Owner", x => x.MapFrom(pr => pr.Owner.UserName));
-                                                        //.ForMember("Id", x => x.Ignore())
-                                                        //.ForMember("OwnerId", x => x.Ignore());
-                
+                cfg.AddProfile<ModelToDTOMappingProfile>();
+                cfg.AddProfile<DTOToModelMappingProfile>();
             }).CreateMapper();
         } 
     }

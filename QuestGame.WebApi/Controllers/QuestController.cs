@@ -26,19 +26,19 @@ namespace QuestGame.WebApi.Controllers
             var dbContext = new ApplicationDbContext();
             this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
 
-            mapper = AutoMapperConfiguration.GetMappings();
+            this.mapper = AutoMapperConfiguration.CreatetMappings();
         }
 
-        // GET api/values
+        // GET api/Quest
         public IEnumerable<QuestResponseDTO> Get()
         {
-            var quests = dataManager.Quests.GetAll().ToList();
+            var quests = dataManager.Quests.GetAll();
 
-            var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestResponseDTO>>(quests);
+            var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestResponseDTO>>(quests.ToList());
             return response;
         }
 
-        // GET api/values/5
+        // GET api/Quest/5
         public QuestResponseDTO Get(int id)
         {
             var quest = dataManager.Quests.GetById(id);
@@ -50,13 +50,13 @@ namespace QuestGame.WebApi.Controllers
             return response;
         }
 
-        // POST api/values
+        // POST api/Quest
         public void Post(Quest quest)
         {
             dataManager.Quests.Add(quest);
         }
 
-        // DELETE api/values/5
+        // DELETE api/Quest/5
         public void Delete(int id)
         {
             dataManager.Quests.Delete(id);
