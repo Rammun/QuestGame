@@ -23,7 +23,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         {           
             using (HttpClient client = new HttpClient())
             {
-                var quests = new List<Quest>();
+                IEnumerable<QuestResponseDTO> quests = null;
 
                 var user = Session["User"] as UserModel;
                 if (user == null)
@@ -44,12 +44,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                         return View();
                     }
 
-                    var answer = await response.Content.ReadAsAsync<IEnumerable<Quest>>();
-                    
-                    //foreach (var quest in answer.Quests)
-                    //{
-                    //    quests.Add(JsonConvert.DeserializeObject<Quest>(quest.Body));
-                    //}                    
+                    quests = await response.Content.ReadAsAsync<IEnumerable<QuestResponseDTO>>();                   
                 }
                 return View(quests);
             }

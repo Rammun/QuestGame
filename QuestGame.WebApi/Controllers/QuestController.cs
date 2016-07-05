@@ -3,6 +3,7 @@ using QuestGame.Domain;
 using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
 using QuestGame.Domain.Implementaions;
+using QuestGame.Domain.Interfaces;
 using QuestGame.WebApi.Mapping;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace QuestGame.WebApi.Controllers
     [RoutePrefix("api/Quest")]
     public class QuestController : ApiController
     {
-        DataManager dataManager;
+        IDataManager dataManager;
         IMapper mapper;
 
         public QuestController()
@@ -31,7 +32,7 @@ namespace QuestGame.WebApi.Controllers
         // GET api/values
         public IEnumerable<QuestResponseDTO> Get()
         {
-            var quests = dataManager.Quests.GetAll();
+            var quests = dataManager.Quests.GetAll().ToList();
 
             var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestResponseDTO>>(quests);
             return response;

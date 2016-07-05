@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QuestGame.BusinessLogic.Models.Quest>
+﻿@model IEnumerable<QuestGame.Domain.DTO.ResponseDTO.QuestResponseDTO>
 
 @{
     ViewBag.Title = "Index";
@@ -9,11 +9,17 @@
 
 <div>
     @{
-        <ul>
-            @foreach(var quest in Model)
-            {
-                <li>@quest.Name</li>
-            }
-        </ul>
+        if (Model != null)
+        {
+            <ul>
+                @foreach (var quest in Model)
+                {
+                    <li>
+                        <h3>@quest.Owner</h3>
+                        <p>@quest.Body</p>
+                    </li>
+                }
+            </ul>
+        }
     }
 </div>
