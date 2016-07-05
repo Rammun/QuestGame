@@ -32,7 +32,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         {           
             using (HttpClient client = new HttpClient())
             {
-                IEnumerable<QuestViewModel> quests = null;
+                var model = new List<QuestViewModel>();
 
                 var user = Session["User"] as UserModel;
                 if (user == null)
@@ -41,8 +41,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                 }
                 else
                 {
-                    RequestHelper.Setting(client);
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", user.Token);
+                    RequestHelper.Setting(client, user.Token);
 
                     var response = await client.GetAsync(@"api/Quest");
 
@@ -53,10 +52,20 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                     else
                     {
                         var answer = await response.Content.ReadAsAsync<IEnumerable<QuestResponseDTO>>();
-                        quests = mapper.Map<IEnumerable<QuestResponseDTO>, IEnumerable<QuestViewModel>>(answer);
+
+                        foreach(var item in answer)
+                        {
+                            var body = JsonConvert.DeserializeObject<Quest>(item.Body);
+                            model.Add(new QuestViewModel
+                            {
+                                Title = body.Name,
+                                Owner = body.Author,
+                                Date = item.Date
+                            });
+                        }                        
                     }                                      
                 }
-                return View(quests);
+                return View(model);
             }
         }
     }

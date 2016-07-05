@@ -7,7 +7,8 @@ namespace QuestGame.WebApi.Models
 {
     public class QuestViewModel
     {
-        public string Body { get; set; }
-        public string Owner { get; set; }        
+        public string Title { get; set; }
+        public string Owner { get; set; }
+        public DateTime Date { get; set; }
     }
 }

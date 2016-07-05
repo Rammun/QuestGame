@@ -10,6 +10,7 @@ namespace QuestGame.Domain.DTO.ResponseDTO
     public class QuestResponseDTO
     {
         public string Body { get; set; }
+        public DateTime Date { get; set; }
         public string Owner { get; set; }        
     }
 }

@@ -12,7 +12,7 @@ namespace QuestGame.WebApi.Mapping.Profiles
     {
         public DTOToModelMappingProfile()
         {
-            CreateMap<QuestResponseDTO, QuestViewModel>();
+            //CreateMap<QuestResponseDTO, QuestViewModel>();
         }
 
         public override string ProfileName

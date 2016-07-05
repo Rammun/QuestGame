@@ -8,6 +8,7 @@ namespace QuestGame.Domain.DTO.RequestDTO
 {
     public class QuestRequestDTO
     {
-        public string UserName { get; set; }
+        public string Owner { get; set; }
+        public string Body { get; set; }
     }
 }

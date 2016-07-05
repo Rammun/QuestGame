@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using QuestGame.Domain;
+using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
 using QuestGame.Domain.Implementaions;
@@ -42,18 +43,22 @@ namespace QuestGame.WebApi.Controllers
         public QuestResponseDTO Get(int id)
         {
             var quest = dataManager.Quests.GetById(id);
-            var response = new QuestResponseDTO
-            {
-                Owner = quest.Owner.UserName,
-                Body = quest.Body
-            };
+            if (quest == null)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            var response = mapper.Map<Quest, QuestResponseDTO>(quest);
             return response;
         }
 
         // POST api/Quest
-        public void Post(Quest quest)
+        public void Post(QuestRequestDTO quest)
         {
-            dataManager.Quests.Add(quest);
+            var model = mapper.Map<QuestRequestDTO, Quest>(quest);
+            var owner = dataManager.Users.FirstOrDefault(u => u.UserName == quest.Owner);
+            if (owner == null)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            model.Owner = owner;
+
+            dataManager.Quests.Add(model);
         }
 
         // DELETE api/Quest/5
