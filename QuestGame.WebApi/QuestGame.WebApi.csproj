@@ -294,6 +294,7 @@
     <Content Include="Areas\Game\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Game\Views\MainPage\Index.cshtml" />
     <Content Include="Areas\Game\Views\Designer\Index.cshtml" />
+    <Content Include="Areas\Game\Views\Designer\AddQuest.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

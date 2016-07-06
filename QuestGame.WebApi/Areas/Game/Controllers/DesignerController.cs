@@ -68,5 +68,44 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                 return View(model);
             }
         }
+
+        [HttpGet]
+        public ActionResult AddQuest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddQuest(string title)
+        {
+            if (title == null)
+                return View();
+
+            var user = Session["User"] as UserModel;
+
+            var quest = new Quest
+            {
+                Author = user.UserName,
+                Frames = new List<Frame>(),
+                Name = title
+            };
+
+            var request = new QuestRequestDTO
+            {
+                Owner = user.UserName,
+                Body = JsonConvert.SerializeObject(quest)
+            };
+
+            using (var client = new HttpClient())
+            {
+                RequestHelper.Setting(client, user.Token);
+                var response = await client.PostAsJsonAsync(@"api/Quest", request);
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    ViewBag.Message = "Неудачный запрос!";
+                }
+            }
+        }
     }
 }
