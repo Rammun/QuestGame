@@ -41,7 +41,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                 }
                 else
                 {
-                    RequestHelper.Setting(client, user.Token);
+                    RequestHelper.ClientSetting(client, user.Token);
 
                     var response = await client.GetAsync(@"api/Quest");
 
@@ -76,6 +76,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddQuest(string title)
         {
             if (title == null)
@@ -98,14 +99,17 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
 
             using (var client = new HttpClient())
             {
-                RequestHelper.Setting(client, user.Token);
+                RequestHelper.ClientSetting(client, user.Token);
                 var response = await client.PostAsJsonAsync(@"api/Quest", request);
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     ViewBag.Message = "Неудачный запрос!";
+                    return View();
                 }
             }
+
+            return RedirectToAction("Index");
         }
     }
 }

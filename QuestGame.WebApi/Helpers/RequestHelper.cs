@@ -25,7 +25,7 @@ namespace QuestGame.WebApi.Helpers
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public static void Setting(HttpClient client, string authToken)
+        public static void ClientSetting(HttpClient client, string authToken)
         {
             RequestHelper.Setting(client);
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", authToken);

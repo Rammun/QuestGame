@@ -12,27 +12,12 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true)
-                @Html.HiddenFor(m => m.Code)
 
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Email)</label>
-                    @Html.TextBoxFor(t => t.Email, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(v => v.Email)
+                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(n => n)</label>
+                    @Html.TextBoxFor(t => t, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(v => v)
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Password)</label>
-                    @Html.TextBoxFor(t => t.Password, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(v => v.Password)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.ConfirmPassword)</label>
-                    @Html.TextBoxFor(t => t.ConfirmPassword, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(v => v.ConfirmPassword)
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">@Html.DisplayNameFor(n => n.Phone)</label>
-                    @Html.TextBoxFor(t => t.Phone, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(v => v.Phone)
                 </div>
                 <div class="col-sm-4">
                     <div class="pull-right">
