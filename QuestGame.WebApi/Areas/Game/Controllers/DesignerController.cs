@@ -72,7 +72,8 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         [HttpGet]
         public ActionResult AddQuest()
         {
-            return View();
+            var model = "Title";
+            return View(model);
         }
 
         [HttpPost]
