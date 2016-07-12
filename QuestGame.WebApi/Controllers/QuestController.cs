@@ -37,6 +37,8 @@ namespace QuestGame.WebApi.Controllers
         // GET api/Quest
         public IEnumerable<QuestResponseDTO> Get()
         {
+            logger.Information("Запрос на получение всех квестов");
+
             var quests = dataManager.Quests.GetAll();
 
             var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestResponseDTO>>(quests.ToList());
@@ -46,6 +48,8 @@ namespace QuestGame.WebApi.Controllers
         // GET api/Quest/5
         public QuestResponseDTO Get(int id)
         {
+            logger.Information("Запрос на получение квеста id = {0}", id);
+
             var quest = dataManager.Quests.GetById(id);
             if (quest == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
