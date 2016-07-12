@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using QuestGame.Common;
+using QuestGame.Common.Interfaces;
 using QuestGame.Domain;
 using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
@@ -21,6 +23,7 @@ namespace QuestGame.WebApi.Controllers
     {
         IDataManager dataManager;
         IMapper mapper;
+        ILoggerService logger;
 
         public QuestController()
         {
@@ -28,6 +31,7 @@ namespace QuestGame.WebApi.Controllers
             this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
 
             this.mapper = AutoMapperConfiguration.CreatetMappings();
+            this.logger = new LoggerService();
         }
 
         // GET api/Quest
