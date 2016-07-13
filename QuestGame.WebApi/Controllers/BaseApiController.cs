@@ -10,19 +10,19 @@ using System.Web.Http;
 
 namespace QuestGame.WebApi.Controllers
 {
-    public class BaseApiController : ApiController
-    {
-        IDataManager dataManager;
-        IMapper mapper;
-        ILoggerService logger;
+    //public class BaseApiController : ApiController
+    //{
+    //    IDataManager dataManager;
+    //    IMapper mapper;
+    //    ILoggerService logger;
 
-        public BaseApiController(IDataManager dataManager,
-                                 IMapper mapper,
-                                 ILoggerService logger)
-        {
-            this.dataManager = dataManager;
-            this.mapper = mapper;
-            this.logger = logger;
-        }
-    }
+    //    public BaseApiController(IDataManager dataManager,
+    //                             IMapper mapper,
+    //                             ILoggerService logger)
+    //    {
+    //        this.dataManager = dataManager;
+    //        this.mapper = mapper;
+    //        this.logger = logger;
+    //    }
+    //}
 }

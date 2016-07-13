@@ -11,20 +11,20 @@ using System.Web.Http;
 namespace QuestGame.WebApi.Controllers
 {
     [RoutePrefix("api/Values")]
-    public class ValuesController
+    public class ValuesController : ApiController
     {
-        IDataManager dataManager;
-        IMapper mapper;
-        ILoggerService logger;
+        //IDataManager dataManager;
+        //IMapper mapper;
+        //ILoggerService logger;
 
-        public ValuesController(IDataManager dataManager,
-                                IMapper mapper,
-                                ILoggerService logger)
-        {
-            this.dataManager = dataManager;
-            this.mapper = mapper;
-            this.logger = logger;
-        }
+        //public ValuesController(IDataManager dataManager,
+        //                        IMapper mapper,
+        //                        ILoggerService logger)
+        //{
+        //    this.dataManager = dataManager;
+        //    this.mapper = mapper;
+        //    this.logger = logger;
+        //}
 
         // GET api/values
         [Authorize]
