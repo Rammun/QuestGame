@@ -22,27 +22,23 @@ namespace QuestGame.WebApi.Controllers
     public class QuestController : ApiController
     {
         IDataManager dataManager;
-        IMapper mapper = AutoMapperConfiguration.CreatetMappings();
+        IMapper mapper;
         ILoggerService logger;
 
-        //public QuestController(IDataManager dataManager, ILoggerService logger)
-        //{
-        //    this.dataManager = dataManager;
-        //    this.logger = logger;
-
-        //    //var dbContext = new ApplicationDbContext();
-        //    //this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
-            
-        //    //this.logger = new LoggerService();
-        //}
-
-        public QuestController()
+        public QuestController(IDataManager dataManager, IMapper mapper, ILoggerService logger)
         {
-            var dbContext = new ApplicationDbContext();
-            this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
-
-            this.logger = new LoggerService();
+            this.dataManager = dataManager;
+            this.mapper = mapper;
+            this.logger = logger;
         }
+
+        //public QuestController()
+        //{
+        //    var dbContext = new ApplicationDbContext();
+        //    this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
+        //    this.mapper = AutoMapperConfiguration.CreatetMappings();
+        //    this.logger = new LoggerService();
+        //}
 
         // GET api/Quest
         public IEnumerable<QuestResponseDTO> Get()

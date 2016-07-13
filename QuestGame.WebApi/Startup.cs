@@ -14,13 +14,12 @@ namespace QuestGame.WebApi
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            var config = new HttpConfiguration();
-            WebApiConfig.Register(config);
 
-            app.UseNinjectMiddleware(() => NinjectConfig.CreateKernel.Value);
-            app.UseNinjectWebApi(config);
+            //var config = new HttpConfiguration();
+            //WebApiConfig.Register(config);
 
-            
+            //app.UseNinjectMiddleware(() => NinjectConfig.CreateKernel.Value);
+            //app.UseNinjectWebApi(config);            
         }
     }
 }
