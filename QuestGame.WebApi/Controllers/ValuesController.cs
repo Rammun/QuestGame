@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using QuestGame.Common.Interfaces;
+using QuestGame.Domain.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -8,8 +11,21 @@ using System.Web.Http;
 namespace QuestGame.WebApi.Controllers
 {
     [RoutePrefix("api/Values")]
-    public class ValuesController : ApiController
+    public class ValuesController
     {
+        IDataManager dataManager;
+        IMapper mapper;
+        ILoggerService logger;
+
+        public ValuesController(IDataManager dataManager,
+                                IMapper mapper,
+                                ILoggerService logger)
+        {
+            this.dataManager = dataManager;
+            this.mapper = mapper;
+            this.logger = logger;
+        }
+
         // GET api/values
         [Authorize]
         [HttpGet]
