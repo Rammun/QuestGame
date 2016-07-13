@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Owin;
+﻿using Microsoft.Owin;
+using Ninject.Web.Common.OwinHost;
+using Ninject.Web.WebApi.OwinHost;
 using Owin;
-using QuestGame.WebApi.Mapping;
+using QuestGame.WebApi.Infrastructure;
+using System.Web.Http;
 
 [assembly: OwinStartup(typeof(QuestGame.WebApi.Startup))]
 
@@ -14,6 +14,13 @@ namespace QuestGame.WebApi
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            var config = new HttpConfiguration();
+            WebApiConfig.Register(config);
+
+            app.UseNinjectMiddleware(() => NinjectConfig.CreateKernel.Value);
+            app.UseNinjectWebApi(config);
+
+            
         }
     }
 }
