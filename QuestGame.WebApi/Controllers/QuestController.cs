@@ -7,6 +7,7 @@ using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
 using QuestGame.Domain.Implementaions;
 using QuestGame.Domain.Interfaces;
+using QuestGame.WebApi.Infrastructure;
 using QuestGame.WebApi.Mapping;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,6 @@ namespace QuestGame.WebApi.Controllers
         IMapper mapper;
         ILoggerService logger;
 
-        public QuestController(IDataManager dataManager, IMapper mapper, ILoggerService logger)
-        {
-            this.dataManager = dataManager;
-            this.mapper = mapper;
-            this.logger = logger;
-        }
-
         //public QuestController()
         //{
         //    var dbContext = new ApplicationDbContext();
@@ -39,6 +33,13 @@ namespace QuestGame.WebApi.Controllers
         //    this.mapper = AutoMapperConfiguration.CreatetMappings();
         //    this.logger = new LoggerService();
         //}
+
+        public QuestController(IDataManager dataManager, IMapper mapper, ILoggerService logger)
+        {
+            this.dataManager = dataManager;
+            this.mapper = mapper;
+            this.logger = logger;
+        }        
 
         // GET api/Quest
         public IEnumerable<QuestResponseDTO> Get()

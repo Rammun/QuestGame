@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using QuestGame.Common.Interfaces;
 using QuestGame.Domain.Interfaces;
+using QuestGame.WebApi.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,10 @@ namespace QuestGame.WebApi.Controllers
         //    this.mapper = mapper;
         //    this.logger = logger;
         //}
-
+        public ValuesController()
+        {
+        }
+        
         // GET api/values
         [Authorize]
         [HttpGet]

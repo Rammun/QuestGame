@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
-using Ninject;
-using Ninject.Activation;
-using Ninject.Parameters;
-using Ninject.Syntax;
-using Ninject.Web.WebApi;
+using Ninject.Modules;
 using QuestGame.Common;
 using QuestGame.Common.Interfaces;
 using QuestGame.Domain;
@@ -17,64 +13,114 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Dependencies;
 
-namespace QuestGame.WebApi.Infrastructure
+//  A small Library to configure Ninject (A Dependency Injection Library) with a WebAPI Application. 
+//  To configure, take the following steps.
+// 
+//  1. Install Packages Ninject and Ninject.Web.Common 
+//  2. Remove NinjectWebCommon.cs in your App_Start Directory
+//  3. Add this file to your project  (preferrably in the App_Start Directory)  
+//  4. Add Your Bindings to the Load method of MainModule. 
+//     You can add as many additional modules to keep things organized
+//     simply add them to the Modules property of the NinjectModules class
+//  5. Add the following Line to your Global.asax
+//          NinjectHttpContainer.RegisterModules(NinjectHttpModules.Modules);  
+//  5b.To Automatically Register all NinjectModules in the Current Project, You should instead add
+//          NinjectContainer.RegisterAssembly()
+//  You are done. 
+
+namespace Ninject.Http
 {
-    //public static class NinjectConfig
-    //{
-    //    public static Lazy<IKernel> CreateKernel = new Lazy<IKernel>(() =>
-    //    {
-    //        var kernel = new StandardKernel();
-    //        kernel.Load(Assembly.GetExecutingAssembly());
-
-    //        RegisterServices(kernel);
-    //        GlobalConfiguration.Configuration.DependencyResolver = new NinjectDependencyResolver(kernel);
-    //        return kernel;
-    //    });
-
-    //    private static void RegisterServices(KernelBase kernel)
-    //    {
-    //        kernel.Bind<IDataManager>().To<DataManager>().WithConstructorArgument(new ApplicationDbContext());
-    //        kernel.Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
-    //        kernel.Bind<ILoggerService>().To<LoggerService>();
-    //    }
-    //}
-
-    public class NinjectResolver : NinjectScope, IDependencyResolver
+    /// <summary>
+    /// Resolves Dependencies Using Ninject
+    /// </summary>
+    public class NinjectHttpResolver : IDependencyResolver, IDependencyScope
     {
-        private readonly IKernel _kernel;
-        public NinjectResolver(IKernel kernel)
-            : base(kernel)
+        public IKernel Kernel { get; private set; }
+        public NinjectHttpResolver(params NinjectModule[] modules)
         {
-            _kernel = kernel;
+            Kernel = new StandardKernel(modules);
         }
+
+        public NinjectHttpResolver(Assembly assembly)
+        {
+            Kernel = new StandardKernel();
+            Kernel.Load(assembly);
+        }
+
+        public object GetService(Type serviceType)
+        {
+            return Kernel.TryGet(serviceType);
+        }
+
+        public IEnumerable<object> GetServices(Type serviceType)
+        {
+            return Kernel.GetAll(serviceType);
+        }
+
+        public void Dispose()
+        {
+            //Do Nothing
+        }
+
         public IDependencyScope BeginScope()
         {
-            return new NinjectScope(_kernel.BeginBlock());
+            return this;
         }
     }
 
-    public class NinjectScope : IDependencyScope
+
+    // List and Describe Necessary HttpModules
+    // This class is optional if you already Have NinjectMvc
+    public class NinjectHttpModules
     {
-        protected IResolutionRoot resolutionRoot;
-        public NinjectScope(IResolutionRoot kernel)
+        //Return Lists of Modules in the Application
+        public static NinjectModule[] Modules
         {
-            resolutionRoot = kernel;
+            get
+            {
+                return new[] { new MainModule() };
+            }
         }
-        public object GetService(Type serviceType)
+
+        //Main Module For Application
+        public class MainModule : NinjectModule
         {
-            IRequest request = resolutionRoot.CreateRequest(serviceType, null, new Parameter[0], true, true);
-            return resolutionRoot.Resolve(request).SingleOrDefault();
+            public override void Load()
+            {
+                //TODO: Bind to Concrete Types Here
+                Bind<IDataManager>().To<DataManager>().WithConstructorArgument(new ApplicationDbContext());
+                Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
+                Bind<ILoggerService>().To<LoggerService>();
+            }
         }
-        public IEnumerable<object> GetServices(Type serviceType)
+    }
+
+
+    /// <summary>
+    /// Its job is to Register Ninject Modules and Resolve Dependencies
+    /// </summary>
+    public class NinjectHttpContainer
+    {
+        private static NinjectHttpResolver _resolver;
+
+        //Register Ninject Modules
+        public static void RegisterModules(NinjectModule[] modules)
         {
-            IRequest request = resolutionRoot.CreateRequest(serviceType, null, new Parameter[0], true, true);
-            return resolutionRoot.Resolve(request).ToList();
+            _resolver = new NinjectHttpResolver(modules);
+            GlobalConfiguration.Configuration.DependencyResolver = _resolver;
         }
-        public void Dispose()
+
+        public static void RegisterAssembly()
         {
-            IDisposable disposable = (IDisposable)resolutionRoot;
-            if (disposable != null) disposable.Dispose();
-            resolutionRoot = null;
+            _resolver = new NinjectHttpResolver(Assembly.GetExecutingAssembly());
+            //This is where the actual hookup to the Web API Pipeline is done.
+            GlobalConfiguration.Configuration.DependencyResolver = _resolver;
+        }
+
+        //Manually Resolve Dependencies
+        public static T Resolve<T>()
+        {
+            return _resolver.Kernel.Get<T>();
         }
     }
 }
