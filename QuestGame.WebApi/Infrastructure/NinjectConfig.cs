@@ -84,7 +84,7 @@ namespace QuestGame.WebApi.Infrastructure
             Bind<IApplicationDbContext>().To<ApplicationDbContext>();
             Bind<IDataManager>().To<DataManager>();
             Bind<IQuestRepository>().To<EFQuestRepository>();
-            Bind<IMapper>().ToMethod(AutoMapperConfiguration.CreatetMappings());
+            Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
             Bind<ILoggerService>().To<LoggerService>();
 
         }
