@@ -202,7 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Game\Controllers\DesignerController.cs" />
+    <Compile Include="Areas\Game\Models\DesignerController.cs" />
     <Compile Include="Areas\Game\Controllers\MainPageController.cs" />
     <Compile Include="Areas\Game\GameAreaRegistration.cs" />
     <Compile Include="Areas\Game\Models\QuestViewModel.cs" />
@@ -246,7 +246,11 @@
     <Compile Include="Helpers\RequestHelper.cs" />
     <Compile Include="Infrastructure\NinjectConfig.cs" />
     <Compile Include="Mapping\AutoMapperConfiguration.cs" />
+    <Compile Include="Mapping\Profiles\DTOToEntityMappingProfile.cs" />
     <Compile Include="Mapping\Profiles\DTOToModelMappingProfile.cs" />
+    <Compile Include="Mapping\Profiles\EntityToDTOMappingProfile.cs" />
+    <Compile Include="Mapping\Profiles\EntityToLogicModelMappingProfile.cs" />
+    <Compile Include="Mapping\Profiles\LogicModelToEntityMappingProfile.cs" />
     <Compile Include="Mapping\Profiles\ModelToDTOMappingProfile.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
