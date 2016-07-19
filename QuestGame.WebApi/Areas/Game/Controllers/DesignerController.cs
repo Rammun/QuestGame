@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using QuestGame.BusinessLogic.Models;
 using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
+using QuestGame.WebApi.Areas.Game.Models;
+using QuestGame.WebApi.Attributes;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Mapping;
 using QuestGame.WebApi.Models;
@@ -18,6 +20,7 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
 {
+    
     public class DesignerController : Controller
     {
         IMapper mapper;
@@ -27,20 +30,21 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
             this.mapper = AutoMapperConfiguration.CreatetMappings();
         }
 
+        [CustomAuthAttribute(this.Session)]
         // GET: Game/Designer
         public async Task<ActionResult> Index()
         {           
             using (HttpClient client = new HttpClient())
             {
-                var model = new List<QuestViewModel>();
+                var model = new List<QuestTitleViewModel>();
 
                 var user = Session["User"] as UserModel;
-                if (user == null)
-                {
-                    ViewBag.Message = "Пользователь не аутентифицирован!";
-                }
-                else
-                {
+                //if (user == null)
+                //{
+                //    ViewBag.Message = "Пользователь не аутентифицирован!";
+                //}
+                //else
+                //{
                     RequestHelper.ClientSetting(client, user.Token);
 
                     var response = await client.GetAsync(@"api/Quest");
@@ -56,15 +60,15 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                         foreach(var item in answer)
                         {
                             var body = JsonConvert.DeserializeObject<Quest>(item.Body);
-                            model.Add(new QuestViewModel
+                            model.Add(new QuestTitleViewModel
                             {
-                                Title = body.Name,
+                                Title = body.Title,
                                 Owner = body.Author,
                                 Date = item.Date
                             });
                         }                        
                     }                                      
-                }
+                //}
                 return View(model);
             }
         }
@@ -72,30 +76,23 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         [HttpGet]
         public ActionResult AddQuest()
         {
-            var model = "Title";
+            var model = new QuestViewModel { Title = "Title" };
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddQuest(string title)
+        public async Task<ActionResult> AddQuest(QuestViewModel model)
         {
-            if (title == null)
-                return View();
+            if (!ModelState.IsValid)
+                return View(model);
 
             var user = Session["User"] as UserModel;
-
-            var quest = new Quest
-            {
-                Author = user.UserName,
-                Frames = new List<Frame>(),
-                Name = title
-            };
 
             var request = new QuestRequestDTO
             {
                 Owner = user.UserName,
-                Body = JsonConvert.SerializeObject(quest)
+                Body = string.Empty
             };
 
             using (var client = new HttpClient())

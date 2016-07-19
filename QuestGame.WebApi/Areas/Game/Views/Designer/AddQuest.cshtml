@@ -1,4 +1,4 @@
-﻿@model String
+﻿@model QuestGame.WebApi.Areas.Game.Models.QuestViewModel
 
 @{
     ViewBag.Title = "AddQuest";
@@ -27,7 +27,20 @@
                     </div>
                 </div>
             }
-        </div>    
+        </div>
+        <table class="table table-hover table-bordered">
+            <tbody>
+                <tr>
+                    <th>Номер</th>
+                    <th>Название фрейма</th>
+                    <th>Действие</th>
+                </tr>
+                <tr>
+                    <td>@Html.DisplayNameFor(n => n.CreareDate)</td>
+                    <td>@Model.CreareDate</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

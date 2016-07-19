@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using QuestGame.Domain.DTO.ResponseDTO;
+using QuestGame.Domain.Entities;
 using QuestGame.WebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace QuestGame.WebApi.Mapping.Profiles
     {
         public DTOToModelMappingProfile()
         {
-            //CreateMap<QuestResponseDTO, QuestViewModel>();
+            CreateMap<QuestResponseDTO, Quest>();
         }
 
         public override string ProfileName
