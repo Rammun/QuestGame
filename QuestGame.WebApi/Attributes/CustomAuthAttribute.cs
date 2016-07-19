@@ -6,25 +6,18 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Attributes
 {
-    public class CustomAuthAttribute : AuthorizeAttribute
+    public class CustomAuthorizeAttribute : AuthorizeAttribute
     {
-        HttpSessionStateBase session;
-
-        public CustomAuthAttribute(HttpSessionStateBase session)
+        public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            this.session = session;
-        }
-
-        public void OnAuthorization(AuthorizationContext filterContext)
-        {
-            // если пользователь не авторизован, то он перенаправляется на Account/Login
-            var auth = session["User"];
+            // если пользователь не авторизован, то он перенаправляется на Home/Login
+            var auth = filterContext.HttpContext.Session["User"];
             if (auth == null)
             {
                 filterContext.Result = new RedirectToRouteResult(
-                    new System.Web.Routing.RouteValueDictionary { 
-                { "controller", "Account" }, { "action", "LoginUser" } 
-            });
+                    new System.Web.Routing.RouteValueDictionary {
+                    { "controller", "Home" }, { "action", "Login" }, { "Area", "" } 
+                });
             }
         }
     }

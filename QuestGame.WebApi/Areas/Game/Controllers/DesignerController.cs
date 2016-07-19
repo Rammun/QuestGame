@@ -20,7 +20,7 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
 {
-    
+    [CustomAuthorize]
     public class DesignerController : Controller
     {
         IMapper mapper;
@@ -29,8 +29,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         {
             this.mapper = AutoMapperConfiguration.CreatetMappings();
         }
-
-        [CustomAuthAttribute(this.Session)]
+                
         // GET: Game/Designer
         public async Task<ActionResult> Index()
         {           
@@ -39,36 +38,29 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                 var model = new List<QuestTitleViewModel>();
 
                 var user = Session["User"] as UserModel;
-                //if (user == null)
-                //{
-                //    ViewBag.Message = "Пользователь не аутентифицирован!";
-                //}
-                //else
-                //{
-                    RequestHelper.ClientSetting(client, user.Token);
+                RequestHelper.ClientSetting(client, user.Token);
 
-                    var response = await client.GetAsync(@"api/Quest");
+                var response = await client.GetAsync(@"api/Quest");
 
-                    if (response.StatusCode != HttpStatusCode.OK)
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    ViewBag.Message = "Неудачный запрос!";
+                }
+                else
+                {
+                    var answer = await response.Content.ReadAsAsync<IEnumerable<QuestResponseDTO>>();
+
+                    foreach(var item in answer)
                     {
-                        ViewBag.Message = "Неудачный запрос!";
-                    }
-                    else
-                    {
-                        var answer = await response.Content.ReadAsAsync<IEnumerable<QuestResponseDTO>>();
-
-                        foreach(var item in answer)
+                        var body = JsonConvert.DeserializeObject<Quest>(item.Body);
+                        model.Add(new QuestTitleViewModel
                         {
-                            var body = JsonConvert.DeserializeObject<Quest>(item.Body);
-                            model.Add(new QuestTitleViewModel
-                            {
-                                Title = body.Title,
-                                Owner = body.Author,
-                                Date = item.Date
-                            });
-                        }                        
-                    }                                      
-                //}
+                            Title = body.Title,
+                            Owner = body.Author,
+                            Date = item.Date
+                        });
+                    }                        
+                }
                 return View(model);
             }
         }
