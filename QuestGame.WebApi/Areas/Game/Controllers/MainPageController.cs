@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
 {
+    [CustomAuthorize]
     public class MainPageController : Controller
     {
         // GET: Game/MainPage

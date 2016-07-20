@@ -13,6 +13,8 @@ namespace QuestGame.Domain
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
         public DbSet<Quest> Quests { get; set; }
+        public DbSet<Frame> Frames { get; set; }
+        public DbSet<Transition> Transitions { get; set; }
 
         public IDbSet<ApplicationUser> GetUsers() { return base.Users; }
         public IDbSet<IdentityRole> GetRoles() { return base.Roles; } 

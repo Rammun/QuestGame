@@ -70,8 +70,9 @@
     <Compile Include="Entities\Frame.cs" />
     <Compile Include="Entities\Quest.cs" />
     <Compile Include="Entities\Transition.cs" />
-    <Compile Include="Implementaions\CommonRepository.cs" />
+    <Compile Include="Implementaions\EFFrameRepository.cs" />
     <Compile Include="Implementaions\EFQuestRepository.cs" />
+    <Compile Include="Implementaions\EFTransitionRepository.cs" />
     <Compile Include="Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Interfaces\IDataManager.cs" />
     <Compile Include="Interfaces\IFrameRepository.cs" />

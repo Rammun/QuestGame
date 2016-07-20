@@ -35,7 +35,7 @@ namespace QuestGame.Domain.Implementaions
 
         public void Update(Quest quest)
         {
-            dbContext.Entry(quest).State = EntityState.Modified; ;
+            dbContext.Entry(quest).State = EntityState.Modified;
         }
 
         public void Delete(Quest quest)

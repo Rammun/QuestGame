@@ -12,6 +12,8 @@ namespace QuestGame.Domain.Interfaces
     public interface IDataManager : IDisposable
     {
         IQuestRepository Quests { get; }
+        IFrameRepository Frames { get; }
+        ITransitionRepository Transitions { get; }
         IDbSet<ApplicationUser> Users { get; }
         IDbSet<IdentityRole> Roles { get; }
 

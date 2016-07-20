@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using QuestGame.BusinessLogic.Models;
 using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
+using QuestGame.Domain.Entities;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Mapping;
 using QuestGame.WebApi.Models;
