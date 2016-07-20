@@ -67,12 +67,17 @@
     <Compile Include="DTO\ResponseDTO\QuestResponseDTO.cs" />
     <Compile Include="DTO\ResponseDTO\RegisterResponseDTO.cs" />
     <Compile Include="Entities\ApplicationUser.cs" />
+    <Compile Include="Entities\Frame.cs" />
     <Compile Include="Entities\Quest.cs" />
+    <Compile Include="Entities\Transition.cs" />
+    <Compile Include="Implementaions\CommonRepository.cs" />
     <Compile Include="Implementaions\EFQuestRepository.cs" />
     <Compile Include="Interfaces\IApplicationDbContext.cs" />
     <Compile Include="Interfaces\IDataManager.cs" />
+    <Compile Include="Interfaces\IFrameRepository.cs" />
     <Compile Include="Interfaces\IQuestRepository.cs" />
-    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ICommonRepository.cs" />
+    <Compile Include="Interfaces\ITransitionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

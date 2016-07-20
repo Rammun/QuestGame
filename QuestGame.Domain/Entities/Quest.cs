@@ -9,9 +9,16 @@ namespace QuestGame.Domain.Entities
     public class Quest
     {
         public int Id { get; set; }
-        public string Body { get; set; }
+        public string Title { get; set; }
         public DateTime Date { get; set; }
+
         public string OwnerId { get; set; }
         public virtual ApplicationUser Owner { get; set; }
+
+        public virtual ICollection<Frame> Frames { get; set; }
+        public Quest()
+        {
+            Frames = new List<Frame>();
+        }
     }
 }

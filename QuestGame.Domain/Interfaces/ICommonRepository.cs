@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface ICommonRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         T GetById(int id);

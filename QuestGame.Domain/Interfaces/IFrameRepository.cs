@@ -1,14 +1,14 @@
-﻿using System;
+﻿using QuestGame.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using QuestGame.Domain.Entities;
 
 namespace QuestGame.Domain.Interfaces
 {
-    public interface IQuestRepository : ICommonRepository<Quest>
+    public interface IFrameRepository : ICommonRepository<Frame>
     {
-        
+
     }
 }
