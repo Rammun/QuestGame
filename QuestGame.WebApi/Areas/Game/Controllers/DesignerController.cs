@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
+using QuestGame.WebApi.Attributes;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Mapping;
 using QuestGame.WebApi.Models;
@@ -18,6 +19,7 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
 {
+    [CustomAuthorize]
     public class DesignerController : Controller
     {
         IMapper mapper;
