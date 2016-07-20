@@ -62,7 +62,7 @@
     <Compile Include="DBInitializers\DBInitialization.cs" />
     <Compile Include="DBInitializers\IInitialization.cs" />
     <Compile Include="DBInitializers\InitUserAdmin.cs" />
-    <Compile Include="DTO\RequestDTO\QuestRequestDTO.cs" />
+    <Compile Include="DTO\QuestDTO.cs" />
     <Compile Include="DTO\RequestDTO\RegisterRequestDTO.cs" />
     <Compile Include="DTO\ResponseDTO\QuestResponseDTO.cs" />
     <Compile Include="DTO\ResponseDTO\RegisterResponseDTO.cs" />

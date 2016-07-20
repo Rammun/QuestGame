@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using QuestGame.Domain.DTO;
 using QuestGame.Domain.DTO.RequestDTO;
 using QuestGame.Domain.DTO.ResponseDTO;
 using QuestGame.Domain.Entities;
+using QuestGame.WebApi.Areas.Game.Models;
 using QuestGame.WebApi.Attributes;
+using QuestGame.WebApi.Controllers;
 using QuestGame.WebApi.Helpers;
 using QuestGame.WebApi.Mapping;
 using QuestGame.WebApi.Models;
@@ -19,54 +22,34 @@ using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
 {
-    [CustomAuthorize]
-    public class DesignerController : Controller
+    public class DesignerController : BaseController
     {
-        IMapper mapper;
-
         public DesignerController()
         {
-            this.mapper = AutoMapperConfiguration.CreatetMappings();
+            base.user = Session["User"] as UserModel;
         }
 
         // GET: Game/Designer
         public async Task<ActionResult> Index()
-        {           
+        {
             using (HttpClient client = new HttpClient())
             {
-                var model = new List<QuestViewModel>();
+                RequestHelper.ClientSetting(client, user.Token);
 
-                var user = Session["User"] as UserModel;
-                if (user == null)
+                var response = await client.GetAsync(@"api/Quest");
+
+                IEnumerable<QuestViewModel> model = null;
+                if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    ViewBag.Message = "Пользователь не аутентифицирован!";
+                    ViewBag.Message = "Неудачный запрос!";
                 }
                 else
                 {
-                    RequestHelper.ClientSetting(client, user.Token);
+                    var answer = await response.Content.ReadAsAsync<IEnumerable<QuestDTO>>();
 
-                    var response = await client.GetAsync(@"api/Quest");
-
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        ViewBag.Message = "Неудачный запрос!";
-                    }
-                    else
-                    {
-                        var answer = await response.Content.ReadAsAsync<IEnumerable<QuestResponseDTO>>();
-
-                        foreach(var item in answer)
-                        {
-                            var body = JsonConvert.DeserializeObject<Quest>(item.Body);
-                            model.Add(new QuestViewModel
-                            {
-                                Title = body.Name,
-                                Owner = body.Author,
-                                Date = item.Date
-                            });
-                        }                        
-                    }                                      
-                }
+                    model = mapper.Map<IEnumerable<QuestDTO>, IEnumerable<QuestViewModel>>(answer);            
+                }                                      
+                
                 return View(model);
             }
         }
@@ -74,31 +57,23 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
         [HttpGet]
         public ActionResult AddQuest()
         {
-            var model = "Title";
+            var model = new NewQuestViewModel
+            {
+                Title = "Title",
+                Owner = user.UserName
+            };
+
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddQuest(string title)
+        public async Task<ActionResult> AddQuest(NewQuestViewModel model)
         {
-            if (title == null)
-                return View();
+            if (!ModelState.IsValid)
+                return View(model);
 
-            var user = Session["User"] as UserModel;
-
-            var quest = new Quest
-            {
-                Author = user.UserName,
-                Frames = new List<Frame>(),
-                Name = title
-            };
-
-            var request = new QuestRequestDTO
-            {
-                Owner = user.UserName,
-                Body = JsonConvert.SerializeObject(quest)
-            };
+            var request = mapper.Map<NewQuestViewModel, QuestDTO>(model);
 
             using (var client = new HttpClient())
             {
@@ -108,7 +83,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
                     ViewBag.Message = "Неудачный запрос!";
-                    return View();
+                    return View(model);
                 }
             }
 

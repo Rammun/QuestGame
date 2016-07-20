@@ -5,14 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestGame.Domain.DTO.ResponseDTO
+namespace QuestGame.Domain.DTO
 {
-    public class QuestResponseDTO
+    public class QuestDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
         public DateTime Date { get; set; }
-        public ApplicationUser Owner { get; set; }
-        public ICollection<Frame> Frames { get; set; }      
+        public string Owner { get; set; }
+        public ICollection<Frame> Frames { get; set; }
     }
 }
