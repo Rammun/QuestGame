@@ -8,7 +8,7 @@ namespace QuestGame.BusinessLogic.Models
 {
     public class Quest
     {
-        public string Name { get; set; }
+        public string Title { get; set; }
         public string Author { get; set; }
         public ICollection<Frame> Frames { get; set; }
 
