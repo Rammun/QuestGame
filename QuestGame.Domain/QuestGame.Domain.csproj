@@ -61,6 +61,7 @@
     <Compile Include="DBInitializer.cs" />
     <Compile Include="DBInitializers\DBInitialization.cs" />
     <Compile Include="DBInitializers\IInitialization.cs" />
+    <Compile Include="DBInitializers\InitQuests.cs" />
     <Compile Include="DBInitializers\InitUserAdmin.cs" />
     <Compile Include="DTO\QuestDTO.cs" />
     <Compile Include="DTO\RequestDTO\RegisterRequestDTO.cs" />

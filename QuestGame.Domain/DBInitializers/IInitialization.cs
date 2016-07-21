@@ -12,6 +12,6 @@ namespace QuestGame.Domain.DBInitializers
 {
     public interface IInitialization
     {
-        void Initialization(ApplicationDbContext context);
+        void Initialization(ApplicationDbContext dbContext);
     }
 }

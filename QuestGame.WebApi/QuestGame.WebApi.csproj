@@ -202,7 +202,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Game\Models\DesignerController.cs" />
+    <Compile Include="Areas\Game\Controllers\DesignerController.cs" />
     <Compile Include="Areas\Game\Controllers\MainPageController.cs" />
     <Compile Include="Areas\Game\GameAreaRegistration.cs" />
     <Compile Include="Areas\Game\Models\QuestViewModel.cs" />
