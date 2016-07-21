@@ -86,6 +86,8 @@ namespace QuestGame.WebApi.Infrastructure
             Bind<IQuestRepository>().To<EFQuestRepository>();
             Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
             Bind<ILoggerService>().To<LoggerService>();
+            Bind<IFrameRepository>().To<EFFrameRepository>();
+            Bind<ITransitionRepository>().To<EFTransitionRepository>();
 
         }
     }
