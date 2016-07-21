@@ -24,17 +24,12 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
 {
     public class DesignerController : BaseController
     {
-        public DesignerController()
-        {
-            base.user = Session["User"] as UserModel;
-        }
-
         // GET: Game/Designer
         public async Task<ActionResult> Index()
         {
             using (HttpClient client = new HttpClient())
             {
-                RequestHelper.ClientSetting(client, user.Token);
+                RequestHelper.ClientSetting(client, SessionUser.Token);
 
                 var response = await client.GetAsync(@"api/Quest");
 
@@ -60,7 +55,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
             var model = new NewQuestViewModel
             {
                 Title = "Title",
-                Owner = user.UserName
+                Owner = SessionUser.UserName
             };
 
             return View(model);
@@ -77,7 +72,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
 
             using (var client = new HttpClient())
             {
-                RequestHelper.ClientSetting(client, user.Token);
+                RequestHelper.ClientSetting(client, SessionUser.Token);
                 var response = await client.PostAsJsonAsync(@"api/Quest", request);
 
                 if (response.StatusCode != HttpStatusCode.OK)

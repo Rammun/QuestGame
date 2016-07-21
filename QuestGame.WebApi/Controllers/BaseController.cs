@@ -14,12 +14,18 @@ namespace QuestGame.WebApi.Controllers
     public class BaseController : Controller
     {
         protected IMapper mapper;
-        protected UserModel user;
 
         public BaseController()
         {
-            this.mapper = AutoMapperConfiguration.CreatetMappings();
-            
+            this.mapper = AutoMapperConfiguration.CreatetMappings();          
+        }
+
+        protected UserModel SessionUser
+        {
+            get
+            {
+                return Session["User"] as UserModel;
+            }
         }
     }
 }
