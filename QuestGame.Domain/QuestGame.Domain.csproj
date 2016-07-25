@@ -73,6 +73,10 @@
     <Compile Include="Entities\Frame.cs" />
     <Compile Include="Entities\Quest.cs" />
     <Compile Include="Entities\Transition.cs" />
+    <Compile Include="EntityConfigurations\ApplicationUserMapper.cs" />
+    <Compile Include="EntityConfigurations\FrameMapper.cs" />
+    <Compile Include="EntityConfigurations\QuestMapper.cs" />
+    <Compile Include="EntityConfigurations\TransitionMapper.cs" />
     <Compile Include="Implementaions\EFFrameRepository.cs" />
     <Compile Include="Implementaions\EFQuestRepository.cs" />
     <Compile Include="Implementaions\EFTransitionRepository.cs" />
@@ -88,9 +92,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EntityConfigurations\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

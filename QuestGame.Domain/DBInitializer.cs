@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using QuestGame.Domain;
 using QuestGame.Domain.DBInitializers;
+using System.Diagnostics;
 
 namespace QuestGame.Domain
 {
@@ -21,12 +22,18 @@ namespace QuestGame.Domain
 
             DBInitialization initialization = new DBInitialization(dbContext);
 
-            // Здесь добавляем созданные нами объекты, наследованные от InitializationDB, для инициализации БД
-            // Пример DBInitilizers.InitUserAdmin
-            initialization.Add(new InitUserAdmin());  // Добавил Ruslan
-            initialization.Add(new InitQuests());
-
-            initialization.Initialization();
+            // Здесь добавляем созданные нами объекты, наследованные от InitializationDB, для инициализации БД            // Пример DBInitilizers.InitUserAdmin
+            initialization.Add(new InitUserAdmin());
+            //initialization.Add(new InitQuests());
+            try
+            {
+                initialization.Initialization();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            
         }
     }
 }

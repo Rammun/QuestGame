@@ -10,9 +10,11 @@ namespace QuestGame.Domain.Entities
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public int NextFame { get; set; }
 
-        public int FrameId { get; set; }
-        public virtual Frame Frame { get; set; }
+        public int NextFrameId { get; set; }
+        public virtual Frame NextFrame { get; set; }
+
+        public int OwnerFrameId { get; set; }
+        public virtual Frame OwnerFrame { get; set; }
     }
 }

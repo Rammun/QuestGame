@@ -10,6 +10,6 @@ namespace QuestGame.Domain.DTO
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public int FrameId { get; set; }
+        public int NextFrameId { get; set; }
     }
 }
