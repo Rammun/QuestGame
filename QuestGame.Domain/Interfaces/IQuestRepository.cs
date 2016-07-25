@@ -7,7 +7,7 @@ using QuestGame.Domain.Entities;
 
 namespace QuestGame.Domain.Interfaces
 {
-    public interface IQuestRepository : ICommonRepository<Quest>
+    public interface IQuestRepository : ICommonRepository<Stage>
     {
         
     }

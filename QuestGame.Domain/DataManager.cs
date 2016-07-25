@@ -15,13 +15,13 @@ namespace QuestGame.Domain
     {
         IApplicationDbContext dbContext;
         IQuestRepository quest;
-        IFrameRepository frame;
-        ITransitionRepository transition;
+        IStageRepository frame;
+        IMotionRepository transition;
 
         public DataManager(IApplicationDbContext dbContext,
                            IQuestRepository quest,
-                            IFrameRepository frame,
-                            ITransitionRepository transition)
+                            IStageRepository frame,
+                            IMotionRepository transition)
         {
             this.dbContext = dbContext;
             this.quest = quest;
@@ -40,7 +40,7 @@ namespace QuestGame.Domain
             }
         }
 
-        public IFrameRepository Frames
+        public IStageRepository Frames
         {
             get
             {
@@ -51,7 +51,7 @@ namespace QuestGame.Domain
             }
         }
 
-        public ITransitionRepository Transitions
+        public IMotionRepository Transitions
         {
             get
             {

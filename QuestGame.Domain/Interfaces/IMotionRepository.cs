@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.Interfaces
 {
-    public interface ITransitionRepository : ICommonRepository<Transition>
+    public interface IMotionRepository : ICommonRepository<Motion>
     {
     }
 }

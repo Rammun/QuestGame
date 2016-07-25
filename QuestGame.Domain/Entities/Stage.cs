@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.Entities
 {
-    public class Frame
+    public class Stage
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -15,11 +15,11 @@ namespace QuestGame.Domain.Entities
         public int QuestId { get; set; }
         public virtual Quest Quest { get; set; }
 
-        public virtual ICollection<Transition> Transitions { get; set; }
+        public virtual ICollection<Motion> Transitions { get; set; }
 
-        public Frame()
+        public Stage()
         {
-            Transitions = new List<Transition>();
+            Transitions = new List<Motion>();
         }
     }
 }

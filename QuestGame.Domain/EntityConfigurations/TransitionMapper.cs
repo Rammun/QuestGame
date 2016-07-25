@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.EntityConfigurations
 {
-    public class TransitionMapper : EntityTypeConfiguration<Transition>
+    public class TransitionMapper : EntityTypeConfiguration<Motion>
     {
         public TransitionMapper()
         {

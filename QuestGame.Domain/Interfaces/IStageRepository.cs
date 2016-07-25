@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.Interfaces
 {
-    public interface IFrameRepository : ICommonRepository<Frame>
+    public interface IStageRepository : ICommonRepository<Stage>
     {
 
     }

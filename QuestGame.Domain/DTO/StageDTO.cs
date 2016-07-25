@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.DTO
 {
-    public class TransitionDTO
+    public class StageDTO
     {
         public int Id { get; set; }
-        public string Description { get; set; }
-        public int NextFrameId { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }        
+        public ICollection<MotionDTO> Transitions { get; set; }
     }
 }

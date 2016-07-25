@@ -24,30 +24,30 @@ namespace QuestGame.Domain.DBInitializers
                     Title = "Title" + 1,
                     Date = DateTime.Now,
                     Owner = owner,
-                    Frames = new List<Frame>
+                    Frames = new List<Stage>
                     {
-                        new Frame { Title = "title-1 - " + i },
-                        new Frame { Title = "title-2 - " + i },
-                        new Frame { Title = "title-3 - " + i },
+                        new Stage { Title = "title-1 - " + i },
+                        new Stage { Title = "title-2 - " + i },
+                        new Stage { Title = "title-3 - " + i },
                     }
                 };
 
                 for(int j = 0; j < quest.Frames.Count; j++)
                 {
                     var frame = quest.Frames.ElementAt(j);
-                    frame.Transitions = new List<Transition>()
+                    frame.Transitions = new List<Motion>()
                     {
-                        new Transition
+                        new Motion
                         {
                             Description = "description" + j,
                             NextFrame = quest.Frames.ElementAt(rnd.Next(0, 3))
                         },
-                        new Transition
+                        new Motion
                         {
                             Description = "description" + j,
                             NextFrame = quest.Frames.ElementAt(rnd.Next(0, 3))
                         },
-                        new Transition
+                        new Motion
                         {
                             Description = "description" + j,
                             NextFrame = quest.Frames.ElementAt(rnd.Next(0, 3))

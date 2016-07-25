@@ -15,10 +15,10 @@ namespace QuestGame.Domain.Entities
         public string OwnerId { get; set; }
         public virtual ApplicationUser Owner { get; set; }
 
-        public virtual ICollection<Frame> Frames { get; set; }
+        public virtual ICollection<Stage> Frames { get; set; }
         public Quest()
         {
-            Frames = new List<Frame>();
+            Frames = new List<Stage>();
         }
     }
 }

@@ -9,43 +9,43 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.Implementaions
 {
-    public class EFFrameRepository : IFrameRepository
+    public class EFStageRepository : IStageRepository
     {
         ApplicationDbContext dbContext;
 
-        public EFFrameRepository(ApplicationDbContext dbContext)
+        public EFStageRepository(ApplicationDbContext dbContext)
         {
             dbContext = this.dbContext;
         }
 
-        public IEnumerable<Frame> GetAll()
+        public IEnumerable<Stage> GetAll()
         {
             return dbContext.Frames;
         }
 
-        public Frame GetById(int id)
+        public Stage GetById(int id)
         {
             return dbContext.Frames.Find(id);
         }
 
-        public void Add(Frame frame)
+        public void Add(Stage frame)
         {
             dbContext.Frames.Add(frame);
         }
 
-        public void Update(Frame frame)
+        public void Update(Stage frame)
         {
             dbContext.Entry(frame).State = EntityState.Modified;
         }
 
-        public void Delete(Frame frame)
+        public void Delete(Stage frame)
         {
             Delete(frame.Id);
         }
 
         public void Delete(object id)
         {
-            Frame frame = GetById((int)id);
+            Stage frame = GetById((int)id);
             if (frame != null)
                 dbContext.Frames.Remove(frame);
         }

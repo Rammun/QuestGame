@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.EntityConfigurations
 {
-    public class FrameMapper : EntityTypeConfiguration<Frame>
+    public class FrameMapper : EntityTypeConfiguration<Stage>
     {
         public FrameMapper()
         {

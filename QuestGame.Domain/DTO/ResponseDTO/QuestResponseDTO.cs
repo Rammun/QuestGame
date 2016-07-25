@@ -13,6 +13,6 @@ namespace QuestGame.Domain.DTO.ResponseDTO
         public string Title { get; set; }
         public DateTime Date { get; set; }
         public ApplicationUser Owner { get; set; }
-        public ICollection<Frame> Frames { get; set; }      
+        public ICollection<Stage> Frames { get; set; }      
     }
 }

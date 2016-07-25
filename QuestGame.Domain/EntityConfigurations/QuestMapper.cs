@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.EntityConfigurations
 {
-    public class QuestMapper : EntityTypeConfiguration<Quest>
+    public class QuestMapper : EntityTypeConfiguration<Stage>
     {
         public QuestMapper()
         {
