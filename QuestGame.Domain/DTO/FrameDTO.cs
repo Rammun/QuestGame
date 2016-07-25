@@ -1,5 +1,4 @@
-﻿using QuestGame.Domain.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.DTO
 {
-    public class QuestDTO
+    public class FrameDTO
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
-        public string Owner { get; set; }
-        public ICollection<FrameDTO> Frames { get; set; }
+        public string Body { get; set; }        
+        public ICollection<TransitionDTO> Transitions { get; set; }
     }
 }

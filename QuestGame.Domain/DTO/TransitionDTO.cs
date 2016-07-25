@@ -4,15 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QuestGame.Domain.Entities
+namespace QuestGame.Domain.DTO
 {
-    public class Transition
+    public class TransitionDTO
     {
         public int Id { get; set; }
         public string Description { get; set; }
-        public int NextFame { get; set; }
-
         public int FrameId { get; set; }
-        public virtual Frame Frame { get; set; }
     }
 }

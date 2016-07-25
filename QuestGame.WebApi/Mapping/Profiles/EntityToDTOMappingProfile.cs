@@ -15,6 +15,8 @@ namespace QuestGame.WebApi.Mapping.Profiles
         public EntityToDTOMappingProfile()
         {
             CreateMap<Quest, QuestDTO>().ForMember("Owner", x => x.MapFrom(pr => pr.Owner.UserName));
+            CreateMap<Frame, FrameDTO>();
+            CreateMap<Transition, TransitionDTO>();
         }
 
         public override string ProfileName
