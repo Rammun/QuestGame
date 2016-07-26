@@ -20,17 +20,17 @@ namespace QuestGame.Domain.Implementaions
 
         public IEnumerable<Stage> GetAll()
         {
-            return dbContext.Frames;
+            return dbContext.Stages;
         }
 
         public Stage GetById(int id)
         {
-            return dbContext.Frames.Find(id);
+            return dbContext.Stages.Find(id);
         }
 
         public void Add(Stage frame)
         {
-            dbContext.Frames.Add(frame);
+            dbContext.Stages.Add(frame);
         }
 
         public void Update(Stage frame)
@@ -47,7 +47,7 @@ namespace QuestGame.Domain.Implementaions
         {
             Stage frame = GetById((int)id);
             if (frame != null)
-                dbContext.Frames.Remove(frame);
+                dbContext.Stages.Remove(frame);
         }
     }
 }

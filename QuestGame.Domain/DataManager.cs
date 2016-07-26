@@ -15,18 +15,18 @@ namespace QuestGame.Domain
     {
         IApplicationDbContext dbContext;
         IQuestRepository quest;
-        IStageRepository frame;
-        IMotionRepository transition;
+        IStageRepository stage;
+        IMotionRepository motion;
 
         public DataManager(IApplicationDbContext dbContext,
                            IQuestRepository quest,
-                            IStageRepository frame,
-                            IMotionRepository transition)
+                            IStageRepository stage,
+                            IMotionRepository motion)
         {
             this.dbContext = dbContext;
             this.quest = quest;
-            this.frame = frame;
-            this.transition = transition;
+            this.stage = stage;
+            this.motion = motion;
         }
 
         public IQuestRepository Quests
@@ -40,25 +40,25 @@ namespace QuestGame.Domain
             }
         }
 
-        public IStageRepository Frames
+        public IStageRepository Stages
         {
             get
             {
-                if (frame == null)
-                    throw new NullReferenceException("Frames равен NULL");
+                if (stage == null)
+                    throw new NullReferenceException("Stages равен NULL");
 
-                return frame;
+                return stage;
             }
         }
 
-        public IMotionRepository Transitions
+        public IMotionRepository Motions
         {
             get
             {
-                if (transition == null)
-                    throw new NullReferenceException("Transitions равен NULL");
+                if (motion == null)
+                    throw new NullReferenceException("Motions равен NULL");
 
-                return transition;
+                return motion;
             }
         }
 

@@ -20,17 +20,17 @@ namespace QuestGame.Domain.Implementaions
 
         public IEnumerable<Motion> GetAll()
         {
-            return dbContext.Transitions;
+            return dbContext.Motions;
         }
 
         public Motion GetById(int id)
         {
-            return dbContext.Transitions.Find(id);
+            return dbContext.Motions.Find(id);
         }
 
         public void Add(Motion transition)
         {
-            dbContext.Transitions.Add(transition);
+            dbContext.Motions.Add(transition);
         }
 
         public void Update(Motion transition)
@@ -47,7 +47,7 @@ namespace QuestGame.Domain.Implementaions
         {
             Motion transition = GetById((int)id);
             if (transition != null)
-                dbContext.Transitions.Remove(transition);
+                dbContext.Motions.Remove(transition);
         }
     }
 }

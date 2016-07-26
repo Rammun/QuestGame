@@ -15,11 +15,11 @@ namespace QuestGame.Domain.Entities
         /// <summary>
         /// Квесты, созданные пользователем
         /// </summary>
-        public virtual ICollection<Stage> Quests { get; set; }
+        public virtual ICollection<Quest> Quests { get; set; }
 
         public ApplicationUser()
         {
-            Quests = new List<Stage>();
+            Quests = new List<Quest>();
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

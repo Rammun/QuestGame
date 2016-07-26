@@ -12,9 +12,9 @@ namespace QuestGame.Domain
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
     {
-        public DbSet<Stage> Quests { get; set; }
-        public DbSet<Stage> Frames { get; set; }
-        public DbSet<Motion> Transitions { get; set; }
+        public DbSet<Quest> Quests { get; set; }
+        public DbSet<Stage> Stages { get; set; }
+        public DbSet<Motion> Motions { get; set; }
 
         public IDbSet<ApplicationUser> GetUsers() { return base.Users; }
         public IDbSet<IdentityRole> GetRoles() { return base.Roles; } 
