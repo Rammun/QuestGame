@@ -13,7 +13,7 @@ namespace QuestGame.Domain.EntityConfigurations
     {
         public StageMapper()
         {
-            this.ToTable("Frame");
+            this.ToTable("Stage");
             this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(x => x.Id).IsRequired();
             this.Property(x => x.Title).IsRequired();
@@ -25,10 +25,6 @@ namespace QuestGame.Domain.EntityConfigurations
 
             this.HasRequired(x => x.Quest)
                 .WithMany(x => x.Stages);
-
-            //this.HasMany(x => x.Motions)
-            //    .WithOptional(x => x.NextStage)
-            //    .HasForeignKey(x => x.NextStageId);
         }
     }
 }

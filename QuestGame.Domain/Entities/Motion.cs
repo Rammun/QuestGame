@@ -11,7 +11,7 @@ namespace QuestGame.Domain.Entities
         public int Id { get; set; }
         public string Description { get; set; }
 
-        public int NextStageId { get; set; }
+        public int? NextStageId { get; set; }
         public virtual Stage NextStage { get; set; }
 
         public int OwnerStageId { get; set; }
