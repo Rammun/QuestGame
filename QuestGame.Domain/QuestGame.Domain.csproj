@@ -74,9 +74,9 @@
     <Compile Include="Entities\Quest.cs" />
     <Compile Include="Entities\Motion.cs" />
     <Compile Include="EntityConfigurations\ApplicationUserMapper.cs" />
-    <Compile Include="EntityConfigurations\FrameMapper.cs" />
+    <Compile Include="EntityConfigurations\StageMapper.cs" />
     <Compile Include="EntityConfigurations\QuestMapper.cs" />
-    <Compile Include="EntityConfigurations\TransitionMapper.cs" />
+    <Compile Include="EntityConfigurations\MotionMapper.cs" />
     <Compile Include="Implementaions\EFStageRepository.cs" />
     <Compile Include="Implementaions\EFQuestRepository.cs" />
     <Compile Include="Implementaions\EFMotionRepository.cs" />

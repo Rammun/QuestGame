@@ -20,7 +20,7 @@ namespace QuestGame.Domain.EntityConfigurations
             this.Property(m => m.Title).IsRequired();
             this.Property(m => m.Date).IsRequired();
 
-            this.HasMany(x => x.Frames)
+            this.HasMany(x => x.Stages)
                 .WithRequired(x => x.Quest)
                 .HasForeignKey(x => x.QuestId);
         }

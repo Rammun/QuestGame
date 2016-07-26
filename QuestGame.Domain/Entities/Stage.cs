@@ -15,11 +15,11 @@ namespace QuestGame.Domain.Entities
         public int QuestId { get; set; }
         public virtual Quest Quest { get; set; }
 
-        public virtual ICollection<Motion> Transitions { get; set; }
+        public virtual ICollection<Motion> Motions { get; set; }
 
         public Stage()
         {
-            Transitions = new List<Motion>();
+            Motions = new List<Motion>();
         }
     }
 }

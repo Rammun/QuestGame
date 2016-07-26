@@ -9,19 +9,21 @@ using System.Threading.Tasks;
 
 namespace QuestGame.Domain.EntityConfigurations
 {
-    public class FrameMapper : EntityTypeConfiguration<Stage>
+    public class MotionMapper : EntityTypeConfiguration<Motion>
     {
-        public FrameMapper()
+        public MotionMapper()
         {
-            this.ToTable("Frame");
+            this.ToTable("Transition");
             this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             this.Property(x => x.Id).IsRequired();
-            this.Property(x => x.Title).IsRequired();
-            this.Property(x => x.Body).IsRequired();
+            this.Property(x => x.Description).IsRequired();
 
-            this.HasMany(x => x.Transitions)
-                .WithRequired(x => x.OwnerFrame)
-                .HasForeignKey(x => x.OwnerFrameId);
+            this.HasRequired(x => x.OwnerStage)
+                .WithMany(x => x.Motions)
+                .HasForeignKey(x => x.OwnerStageId);
+
+            this.HasOptional(x => x.NextStage)
+                .WithRequired();
         }
     }
 }
