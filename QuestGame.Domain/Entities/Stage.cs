@@ -21,8 +21,8 @@ namespace QuestGame.Domain.Entities
         
         public Stage()
         {
-            //Title = "Stage";
-            //Body = string.Empty;
+            Title = "Stage";
+            Body = string.Empty;
             Motions = new List<Motion>();
         }
     }

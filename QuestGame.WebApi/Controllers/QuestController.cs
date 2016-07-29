@@ -75,6 +75,7 @@ namespace QuestGame.WebApi.Controllers
             model.Owner = owner;
 
             dataManager.Quests.Add(model);
+            dataManager.Save();
         }
 
         // DELETE api/Quest/5

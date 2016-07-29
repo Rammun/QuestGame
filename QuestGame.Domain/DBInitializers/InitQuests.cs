@@ -57,6 +57,7 @@ namespace QuestGame.Domain.DBInitializers
 
                 dbContext.Quests.Add(quest);
             }
+            dbContext.SaveChanges();
         }
     }
 }

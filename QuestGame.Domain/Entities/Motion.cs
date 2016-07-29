@@ -19,7 +19,7 @@ namespace QuestGame.Domain.Entities
 
         public Motion()
         {
-            //Description = string.Empty;
+            Description = string.Empty;
         }
     }
 }
