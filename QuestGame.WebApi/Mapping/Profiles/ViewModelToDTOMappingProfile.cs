@@ -14,8 +14,10 @@ namespace QuestGame.WebApi.Mapping.Profiles
         public ViewModelToDTOMappingProfile()
         {
             CreateMap<QuestViewModel, QuestDTO>();
-            CreateMap<NewQuestViewModel, QuestDTO>().ForMember(b => b.Frames, c => c.UseValue(new List<Stage>()))
+            CreateMap<NewQuestViewModel, QuestDTO>().ForMember(b => b.Stages, c => c.UseValue(new List<Stage>()))
                                                     .ForMember(d => d.Date, k => k.UseValue(DateTime.Now));
+            CreateMap<StageViewModel, StageDTO>();
+            CreateMap<MotionViewModel, MotionDTO>();
         }
 
         public override string ProfileName

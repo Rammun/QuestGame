@@ -24,7 +24,7 @@ namespace QuestGame.Domain
 
             // Здесь добавляем созданные нами объекты, наследованные от InitializationDB, для инициализации БД            // Пример DBInitilizers.InitUserAdmin
             initialization.Add(new InitUserAdmin());
-            //initialization.Add(new InitQuests());
+            initialization.Add(new InitQuests());
             try
             {
                 initialization.Initialization();

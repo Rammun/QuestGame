@@ -13,11 +13,11 @@ namespace QuestGame.Domain.EntityConfigurations
     {
         public StageMapper()
         {
-            this.ToTable("Stage");
-            this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            this.Property(x => x.Id).IsRequired();
-            this.Property(x => x.Title).IsRequired();
-            this.Property(x => x.Body).IsRequired();
+            //this.ToTable("Stage");
+            //this.Property(x => x.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //this.Property(x => x.Id).IsRequired();
+            //this.Property(x => x.Title).IsRequired();
+            //this.Property(x => x.Body).IsRequired();
 
             this.HasMany(x => x.Motions)
                 .WithRequired(x => x.OwnerStage)
