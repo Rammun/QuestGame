@@ -11,9 +11,9 @@ namespace QuestGame.Domain.Implementaions
 {
     public class EFStageRepository : IStageRepository
     {
-        ApplicationDbContext dbContext;
+        IApplicationDbContext dbContext;
 
-        public EFStageRepository(ApplicationDbContext dbContext)
+        public EFStageRepository(IApplicationDbContext dbContext)
         {
             dbContext = this.dbContext;
         }
@@ -35,7 +35,7 @@ namespace QuestGame.Domain.Implementaions
 
         public void Update(Stage frame)
         {
-            dbContext.Entry(frame).State = EntityState.Modified;
+            dbContext.EntryObj<Stage>(frame);
         }
 
         public void Delete(Stage frame)

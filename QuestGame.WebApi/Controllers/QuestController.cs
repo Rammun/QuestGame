@@ -28,14 +28,6 @@ namespace QuestGame.WebApi.Controllers
         IMapper mapper;
         ILoggerService logger;
 
-        //public QuestController()
-        //{
-        //    var dbContext = new ApplicationDbContext();
-        //    this.dataManager = new DataManager(dbContext, new EFQuestRepository(dbContext));
-        //    this.mapper = AutoMapperConfiguration.CreatetMappings();
-        //    this.logger = new LoggerService();
-        //}
-
         public QuestController(IDataManager dataManager, IMapper mapper, ILoggerService logger)
         {
             this.dataManager = dataManager;
@@ -69,35 +61,30 @@ namespace QuestGame.WebApi.Controllers
         // POST api/Quest
         public void Post(QuestDTO quest)
         {
-            //var model = mapper.Map<QuestDTO, Quest>(quest);
+            var model = mapper.Map<QuestDTO, Quest>(quest);
 
             var owner = dataManager.Users.FirstOrDefault(u => u.UserName == quest.Owner);
             if (owner == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            var qqq = new Quest
-            {
-                Date = DateTime.Now,
-                Title = quest.Title,
-                Owner = owner
-            };
-
-            
-
-            //model.Owner = owner;
-            //model.OwnerId = owner.Id;
-            //model.Id = 1111;
-            //model.Stages = null;
+            model.Owner = owner;
+            model.Date = DateTime.Now;
 
             try
             {
-                dataManager.Quests.Add(qqq);
+                dataManager.Quests.Add(model);
                 dataManager.Save();
             }
-            catch(Exception ex)
+            catch
             {
-                Debug.WriteLine(ex.Message);
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
             }
+        }
+
+        // PUT api/Quest
+        public void Put(QuestDTO quest)
+        {
+
         }
 
         // DELETE api/Quest/5

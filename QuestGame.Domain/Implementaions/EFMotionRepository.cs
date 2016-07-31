@@ -11,9 +11,9 @@ namespace QuestGame.Domain.Implementaions
 {
     public class EFMotionRepository : IMotionRepository
     {
-        ApplicationDbContext dbContext;
+        IApplicationDbContext dbContext;
 
-        public EFMotionRepository(ApplicationDbContext dbContext)
+        public EFMotionRepository(IApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -35,7 +35,7 @@ namespace QuestGame.Domain.Implementaions
 
         public void Update(Motion transition)
         {
-            dbContext.Entry(transition).State = EntityState.Modified;
+            dbContext.EntryObj<Motion>(transition);
         }
 
         public void Delete(Motion transition)

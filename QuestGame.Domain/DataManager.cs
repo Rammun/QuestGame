@@ -11,22 +11,19 @@ using QuestGame.Domain.Interfaces;
 
 namespace QuestGame.Domain
 {
-    public class DataManager : IDataManager, IDisposable
+    public class DataManager : IDataManager
     {
         IApplicationDbContext dbContext;
         IQuestRepository quest;
         IStageRepository stage;
         IMotionRepository motion;
 
-        public DataManager(IApplicationDbContext dbContext,
-                           IQuestRepository quest,
-                            IStageRepository stage,
-                            IMotionRepository motion)
+        public DataManager(IApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            this.quest = quest;
-            this.stage = stage;
-            this.motion = motion;
+            //this.quest = quest;
+            //this.stage = stage;
+            //this.motion = motion;
         }
 
         public IQuestRepository Quests
@@ -34,7 +31,9 @@ namespace QuestGame.Domain
             get
             {
                 if (quest == null)
-                    throw new NullReferenceException("Quests равен NULL");
+                {
+                    quest = new EFQuestRepository(dbContext);
+                }
 
                 return quest;
             }
@@ -45,7 +44,9 @@ namespace QuestGame.Domain
             get
             {
                 if (stage == null)
-                    throw new NullReferenceException("Stages равен NULL");
+                {
+                    stage = new EFStageRepository(dbContext);
+                }
 
                 return stage;
             }
@@ -56,7 +57,9 @@ namespace QuestGame.Domain
             get
             {
                 if (motion == null)
-                    throw new NullReferenceException("Motions равен NULL");
+                {
+                    motion = new EFMotionRepository(dbContext);
+                }
 
                 return motion;
             }

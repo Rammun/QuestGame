@@ -39,6 +39,11 @@ namespace QuestGame.Domain
             base.SaveChanges();
         }
 
+        public void EntryObj<T>(T entity) where T : class
+        {
+            base.Entry(entity).State = EntityState.Modified;
+        }
+
         public new void Dispose()
         {
             base.Dispose();

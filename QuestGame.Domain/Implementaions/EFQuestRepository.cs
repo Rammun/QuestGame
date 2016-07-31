@@ -11,9 +11,9 @@ namespace QuestGame.Domain.Implementaions
 {
     public class EFQuestRepository : IQuestRepository
     {
-        ApplicationDbContext dbContext;
+        IApplicationDbContext dbContext;
 
-        public EFQuestRepository(ApplicationDbContext dbContext)
+        public EFQuestRepository(IApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
@@ -35,7 +35,7 @@ namespace QuestGame.Domain.Implementaions
 
         public void Update(Quest quest)
         {
-            dbContext.Entry(quest).State = EntityState.Modified;
+            dbContext.EntryObj<Quest>(quest);
         }
 
         public void Delete(Quest quest)

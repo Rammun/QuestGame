@@ -19,19 +19,13 @@ namespace QuestGame.WebApi.Controllers
     [RoutePrefix("api/Values")]
     public class ValuesController : ApiController
     {
-        IDataManager dataManager;
-        //IMapper mapper;
-        //ILoggerService logger;
+        IQuestRepository quests;
 
-        public ValuesController(IDataManager dataManager)
-        //                        IMapper mapper,
-        //                        ILoggerService logger)
+        public ValuesController(IQuestRepository questRepository)
         {
-            this.dataManager = dataManager;
+            this.quests = questRepository;
         }
-        //    this.mapper = mapper;
-        //    this.logger = logger;
-        //}
+
         public ValuesController()
         {
         }
@@ -57,27 +51,23 @@ namespace QuestGame.WebApi.Controllers
         // POST api/values
         public void Post(QuestDTO quest)
         {
-            //var dbContext = new ApplicationDbContext();
-            //var dataManager = new DataManager(dbContext,
-            //               new EFQuestRepository(dbContext),
-            //               new EFStageRepository(dbContext),
-            //               new EFMotionRepository(dbContext));
+            
 
-            var owner = dataManager.Users.FirstOrDefault(u => u.UserName == quest.Owner);
-            if (owner == null)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            //var owner = dbContext.GetUsers().FirstOrDefault(u => u.UserName == quest.Owner);
+            //if (owner == null)
+            //    throw new HttpResponseException(HttpStatusCode.BadRequest);
 
             var qqq = new Quest
             {
                 Date = DateTime.Now,
                 Title = quest.Title,
-                Owner = owner
+                //Owner = owner
             };
 
             try
             {
-                dataManager.Quests.Add(qqq);
-                dataManager.Save();
+                quests.Add(qqq);
+                quests.Update(qqq);
             }
             catch (Exception ex)
             {

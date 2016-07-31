@@ -19,6 +19,7 @@ namespace QuestGame.Domain.Interfaces
         IDbSet<IdentityRole> GetRoles();
 
         void SaveChanges();
+        void EntryObj<T>(T entity) where T : class;
         void Dispose();
     }
 }

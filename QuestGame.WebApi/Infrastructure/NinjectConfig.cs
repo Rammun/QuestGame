@@ -24,8 +24,8 @@ namespace QuestGame.WebApi.Infrastructure
         internal NinjectDependencyScope(IResolutionRoot resolver)
         {
             //Contract.Assert(resolver != null);
-
-            this.resolver = resolver;
+            if(resolver != null)
+                this.resolver = resolver;
         }
 
         public void Dispose()
@@ -80,15 +80,13 @@ namespace QuestGame.WebApi.Infrastructure
     {
         public override void Load()
         {
-            // Bind<IMyService>().To<MyService>().InSingletonScope();
             Bind<IApplicationDbContext>().To<ApplicationDbContext>();
             Bind<IDataManager>().To<DataManager>();
-            Bind<IQuestRepository>().To<EFQuestRepository>();
-            Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
             Bind<ILoggerService>().To<LoggerService>();
+            Bind<IMapper>().ToConstant(AutoMapperConfiguration.CreatetMappings());
+            Bind<IQuestRepository>().To<EFQuestRepository>();
             Bind<IStageRepository>().To<EFStageRepository>();
             Bind<IMotionRepository>().To<EFMotionRepository>();
-
         }
     }
 }
