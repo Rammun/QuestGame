@@ -17,9 +17,9 @@ namespace QuestGame.Domain.Entities
         public int OwnerStageId { get; set; }
         public virtual Stage OwnerStage { get; set; }
 
-        public Motion()
-        {
-            Description = string.Empty;
-        }
+        //public Motion()
+        //{
+        //    Description = string.Empty;
+        //}
     }
 }

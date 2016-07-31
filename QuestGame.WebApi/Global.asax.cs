@@ -26,7 +26,7 @@ namespace QuestGame.WebApi
             var kernel = new StandardKernel(registrations);
             var ninjectResolver = new NinjectDependencyResolver(kernel);
 
-            DependencyResolver.SetResolver(ninjectResolver); // MVC
+            //DependencyResolver.SetResolver(ninjectResolver); // MVC
             GlobalConfiguration.Configuration.DependencyResolver = ninjectResolver; // Web API
         }
     }

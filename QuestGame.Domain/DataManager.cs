@@ -11,7 +11,7 @@ using QuestGame.Domain.Interfaces;
 
 namespace QuestGame.Domain
 {
-    public class DataManager : IDataManager
+    public class DataManager : IDataManager, IDisposable
     {
         IApplicationDbContext dbContext;
         IQuestRepository quest;

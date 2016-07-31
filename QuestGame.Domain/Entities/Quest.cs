@@ -18,8 +18,8 @@ namespace QuestGame.Domain.Entities
         public virtual ICollection<Stage> Stages { get; set; }
         public Quest()
         {
-            Title = "Quest";
-            Date = DateTime.Now;
+            //Title = "Quest";
+            //Date = DateTime.Now;
             Stages = new List<Stage>();
         }
     }

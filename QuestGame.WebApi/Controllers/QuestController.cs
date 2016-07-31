@@ -12,6 +12,7 @@ using QuestGame.WebApi.Infrastructure;
 using QuestGame.WebApi.Mapping;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -68,20 +69,47 @@ namespace QuestGame.WebApi.Controllers
         // POST api/Quest
         public void Post(QuestDTO quest)
         {
-            var model = mapper.Map<QuestDTO, Quest>(quest);
+            //var model = mapper.Map<QuestDTO, Quest>(quest);
+
             var owner = dataManager.Users.FirstOrDefault(u => u.UserName == quest.Owner);
             if (owner == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
-            model.Owner = owner;
 
-            dataManager.Quests.Add(model);
-            dataManager.Save();
+            var qqq = new Quest
+            {
+                Date = DateTime.Now,
+                Title = quest.Title,
+                Owner = owner
+            };
+
+            
+
+            //model.Owner = owner;
+            //model.OwnerId = owner.Id;
+            //model.Id = 1111;
+            //model.Stages = null;
+
+            try
+            {
+                dataManager.Quests.Add(qqq);
+                dataManager.Save();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
         }
 
         // DELETE api/Quest/5
         public void Delete(int id)
         {
             dataManager.Quests.Delete(id);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            dataManager.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
