@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestGame.QuestDesignerWPF"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestGame.Common", "QuestGame.Common\QuestGame.Common.csproj", "{EC276907-905D-4B46-8CA6-6B1251EE1DBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestGame.UnitTest", "QuestGame.UnitTest\QuestGame.UnitTest.csproj", "{01D9A7A1-BA5F-4540-9CFE-BDD08C036B9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{EC276907-905D-4B46-8CA6-6B1251EE1DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC276907-905D-4B46-8CA6-6B1251EE1DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC276907-905D-4B46-8CA6-6B1251EE1DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01D9A7A1-BA5F-4540-9CFE-BDD08C036B9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01D9A7A1-BA5F-4540-9CFE-BDD08C036B9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01D9A7A1-BA5F-4540-9CFE-BDD08C036B9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01D9A7A1-BA5F-4540-9CFE-BDD08C036B9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
