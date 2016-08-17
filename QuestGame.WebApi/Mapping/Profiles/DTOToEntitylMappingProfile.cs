@@ -14,7 +14,7 @@ namespace QuestGame.WebApi.Mapping.Profiles
     {
         public DTOToEntitylMappingProfile()
         {
-            CreateMap<QuestDTO, Quest>().ForMember(x => x.Owner, y => y.Ignore())
+            CreateMap<QuestDTO, Quest>().ForMember(x => x.Author, y => y.Ignore())
                                         .ForMember(x => x.Id, y => y.Ignore());
         }
 

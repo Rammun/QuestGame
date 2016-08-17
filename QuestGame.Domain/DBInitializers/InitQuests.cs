@@ -23,7 +23,7 @@ namespace QuestGame.Domain.DBInitializers
                 {
                     Title = "Title" + 1,
                     Date = DateTime.Now,
-                    Owner = owner,
+                    Author = owner,
                     Stages = new List<Stage>
                     {
                         new Stage { Title = "title-1 - " + i, Body = "body-1 - " + i },

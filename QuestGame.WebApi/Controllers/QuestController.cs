@@ -58,8 +58,18 @@ namespace QuestGame.WebApi.Controllers
             return response;
         }
 
+        [Route("QuestsByOwner")]
+        public IEnumerable<QuestDTO> GetQuestsByOwnerName(string name)
+        {
+            var quests = dataManager.Quests.GetQuestsByOwnerName(name);
+            if (quests == null)
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            var response = mapper.Map<IEnumerable<Quest>, IEnumerable<QuestDTO>>(quests.ToList());
+            return response;
+        }
+
         // POST api/Quest
-        public void Post(QuestDTO quest)
+        public IHttpActionResult Post(QuestDTO quest)
         {
             var model = mapper.Map<QuestDTO, Quest>(quest);
 
@@ -67,13 +77,14 @@ namespace QuestGame.WebApi.Controllers
             if (owner == null)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
 
-            model.Owner = owner;
+            model.Author = owner;
             model.Date = DateTime.Now;
 
             try
             {
                 dataManager.Quests.Add(model);
                 dataManager.Save();
+                return Ok();
             }
             catch
             {
@@ -87,10 +98,39 @@ namespace QuestGame.WebApi.Controllers
 
         }
 
-        // DELETE api/Quest/5
-        public void Delete(int id)
+        // DELETE api/Quest/DelById/5
+        [HttpDelete]
+        [Route("DelById")]
+        public IHttpActionResult DelById(int id)
         {
-            dataManager.Quests.Delete(id);
+            try
+            {
+                dataManager.Quests.Delete(id);
+                dataManager.Save();
+                return Ok();
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
+        }
+
+        // DELETE api/Quest/DelByTitle/title
+        [HttpDelete]
+        [Route("DelByTitle")]
+        public IHttpActionResult DelByTitle(string title)
+        {
+            try
+            {
+                dataManager.Quests.DelByTitle(title);
+                dataManager.Save();
+                return Ok();
+            }
+            catch
+            {
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -21,9 +21,6 @@ namespace QuestGame.Domain
         public DataManager(IApplicationDbContext dbContext)
         {
             this.dbContext = dbContext;
-            //this.quest = quest;
-            //this.stage = stage;
-            //this.motion = motion;
         }
 
         public IQuestRepository Quests

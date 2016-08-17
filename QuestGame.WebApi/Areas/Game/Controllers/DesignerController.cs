@@ -1,23 +1,11 @@
-﻿using AutoMapper;
-using Newtonsoft.Json;
-using QuestGame.Domain.DTO;
-using QuestGame.Domain.DTO.RequestDTO;
-using QuestGame.Domain.DTO.ResponseDTO;
-using QuestGame.Domain.Entities;
+﻿using QuestGame.Domain.DTO;
 using QuestGame.WebApi.Areas.Game.Models;
-using QuestGame.WebApi.Attributes;
 using QuestGame.WebApi.Controllers;
 using QuestGame.WebApi.Helpers;
-using QuestGame.WebApi.Mapping;
-using QuestGame.WebApi.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace QuestGame.WebApi.Areas.Game.Controllers
@@ -31,7 +19,7 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
             {
                 RequestHelper.ClientSetting(client, SessionUser.Token);
 
-                var response = await client.GetAsync(@"api/Quest");
+                var response = await client.GetAsync(@"api/Quest/QuestsByOwner?name=" + SessionUser.UserName);
 
                 IEnumerable<QuestViewModel> model = null;
                 if (response.StatusCode != HttpStatusCode.OK)
@@ -77,12 +65,32 @@ namespace QuestGame.WebApi.Areas.Game.Controllers
 
                 if (response.StatusCode != HttpStatusCode.OK)
                 {
-                    ViewBag.Message = "Неудачный запрос!";
+                    ViewBag.Message = "Не удалось добавить квест!";
                     return View(model);
                 }
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Designer");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> DeleteQuest(string title)
+        {
+            if (title == null)
+                return View(title);
+
+            using (var client = new HttpClient())
+            {
+                RequestHelper.ClientSetting(client, SessionUser.Token);
+                var response = await client.DeleteAsync(@"api/Quest/DelByTitle?title=" + title);
+
+                if (response.StatusCode != HttpStatusCode.OK)
+                {
+                    ViewBag.Message = "Не удалось добавить квест!";
+                }
+            }
+
+            return RedirectToAction("Index", "Designer");
         }
     }
 }
