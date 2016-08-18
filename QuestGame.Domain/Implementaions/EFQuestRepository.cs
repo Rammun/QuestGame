@@ -28,6 +28,16 @@ namespace QuestGame.Domain.Implementaions
             return dbContext.Quests.Find(id);
         }
 
+        public Quest GetByTitle(string title)
+        {
+            return dbContext.Quests.FirstOrDefault(x => x.Title == title);
+        }
+
+        public IEnumerable<Quest> GetQuestsByOwnerName(string name)
+        {
+            return dbContext.Quests.Where(x => x.Author.UserName == name);
+        }
+
         public void Add(Quest quest)
         {
             dbContext.Quests.Add(quest);
@@ -41,6 +51,11 @@ namespace QuestGame.Domain.Implementaions
         public void Delete(Quest quest)
         {
             Delete(quest.Id);
+        }
+
+        public void DelByTitle(string title)
+        {
+            Delete(GetByTitle(title));
         }
 
         public void Delete(object id)

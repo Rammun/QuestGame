@@ -12,8 +12,8 @@ namespace QuestGame.Domain.Entities
         public string Title { get; set; }
         public DateTime Date { get; set; }
 
-        public string OwnerId { get; set; }
-        public virtual ApplicationUser Owner { get; set; }
+        public string AuthorId { get; set; }
+        public virtual ApplicationUser Author { get; set; }
 
         public virtual ICollection<Stage> Stages { get; set; }
         public Quest()
